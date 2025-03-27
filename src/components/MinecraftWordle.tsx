@@ -30,6 +30,7 @@ const MinecraftWordle: React.FC = () => {
     <DndProvider backend={HTML5Backend}>
       <div className="min-h-screen bg-gray-950 text-white p-8">
         <h1 className="text-4xl font-bold text-center mb-8">Minecraftdle</h1>
+        <h2 className="text-2xl font-bold text-center mb-8">Try to craft the Recipe of the Day!</h2>
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-col items-center gap-8">
             <CraftingGrid grid={grid} setGrid={setGrid} />

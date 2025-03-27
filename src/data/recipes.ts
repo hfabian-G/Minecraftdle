@@ -237,12 +237,14 @@ function patternsMatch(pattern1: (string | null)[], pattern2: (string | null)[])
 }
 
 export function getRecipeOfTheDay(): Recipe {
-  const centralTime = new Date().toLocaleString("en-US", { timeZone: "America/Chicago" });
-  const today = new Date(centralTime).setHours(0, 0, 0, 0);
-
+  //const centralTime = new Date().toLocaleString("en-US", { timeZone: "America/Chicago" });
+  //const today = new Date(centralTime).setHours(18, 0, 0, 0);
+  const today = new Date();
+  const seed = (today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate()) % recipes.length;
   // Use the date as seed for pseudo-random selection
-  const seed = today % recipes.length;
+  
   const recipeOfTheDay = recipes[seed];
+  console.log(recipeOfTheDay.pattern);
   return recipeOfTheDay;
 }
 
@@ -266,7 +268,7 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
   
   itemsInGridAndRecipe.forEach((item, index) => {
     itemsInGridAndRecipe[index] = item + '(s)';
-    if (index == itemsInGridAndRecipe.length - 1) {
+    if (index == itemsInGridAndRecipe.length - 1 && index != 0) {
       itemsInGridAndRecipe[index] = 'and ' + itemsInGridAndRecipe[index];
     }
   });
