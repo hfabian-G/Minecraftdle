@@ -288,7 +288,7 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
     message = `You have ${correctPlacements} item${correctPlacements > 1 ? 's' : ''} in the right spot! Keep trying!`;
     message += `\nThe Recipe of the Day contains ${itemsInGridAndRecipe.join(", ")}`;
   } else {
-    message = "Try placing items in different positions. You'll get it!";
+    message = "No matches, keep trying!";
   }
 
   return {

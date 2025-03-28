@@ -14,6 +14,10 @@ const MinecraftWordle: React.FC = () => {
   const [feedbackMessage1, setFeedbackMessage1] = useState<string | null>(null);
   const [feedbackMessage2, setFeedbackMessage2] = useState<string | null>(null);
 
+const handleReset = () => {
+  setGrid(Array(9).fill(null));
+}
+
   const handleSubmit = () => {
     const result = submitRecipe(grid);
     if (result.isMatch) {
@@ -28,29 +32,36 @@ const MinecraftWordle: React.FC = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="min-h-screen bg-gray-950 text-white p-8">
+      <div className="min-h-screen bg-gray-800 text-white p-8">
         <h1 className="text-4xl font-bold text-center mb-8">Minecraftdle</h1>
         <h2 className="text-2xl font-bold text-center mb-8">Try to craft the Recipe of the Day!</h2>
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-col items-center gap-8">
             <CraftingGrid grid={grid} setGrid={setGrid} />
             <ItemSelection />
-            <div className="flex flex-col items-center gap-4">
-              <button 
-                onClick={handleSubmit}
-                className="px-4 py-2 bg-blue-500 rounded hover:bg-blue-600"
-              >
-                Submit
-              </button>
+            <div className="flex flex-col gap-2">
+              <div className="flex gap-2">
+                <button 
+                  onClick={handleSubmit}
+                  className="px-10 py-2 bg-emerald-600 rounded hover:bg-emerald-700"
+                >
+                  Submit
+                </button>
+                <button onClick = {handleReset}
+                  className="px-4 py-2 bg-stone-400 rounded hover:bg-red-900"
+                >
+                  Reset Crafting Grid
+                </button>
+              </div>
               {feedback && (
-                <p className={`text-center ${showSuccess ? 'text-green-400' : 'text-yellow-400'}`}>
+                <p className="text-center text-yellow-400">
                   {feedbackMessage2}
                 </p>
                 
               )}
               
               {feedback && (
-                <p className={`text-center ${showSuccess ? 'text-green-400' : 'text-yellow-400'}`}>
+                <p className="text-center text-green-400">
                   {feedbackMessage1}
                 </p>
 
