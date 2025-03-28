@@ -43,12 +43,12 @@ const handleReset = () => {
               <div className="flex gap-2">
                 <button 
                   onClick={handleSubmit}
-                  className="px-10 py-2 bg-emerald-600 rounded hover:bg-emerald-700"
+                  className="px-10 py-2 bg-emerald-600 rounded hover:bg-emerald-700 shadow-lg shadow-black/50"
                 >
                   Submit
                 </button>
-                <button onClick = {handleReset}
-                  className="px-4 py-2 bg-stone-400 rounded hover:bg-red-900"
+                <button onClick={handleReset}
+                  className="px-4 py-2 bg-stone-400 rounded hover:bg-stone-500 shadow-lg shadow-black/50"
                 >
                   Reset Crafting Grid
                 </button>

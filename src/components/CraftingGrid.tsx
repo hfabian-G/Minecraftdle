@@ -103,7 +103,7 @@ const CraftingGrid: React.FC<CraftingGridProps> = ({ grid, setGrid }) => {
   }, [grid]);
 
   return (
-    <div className="bg-gray-900 p-6 rounded-xl">
+    <div className="bg-gray-900 p-6 rounded-xl shadow-2xl shadow-black/50">
       <div className="flex items-center gap-8">
         <div>
           <div className="grid grid-cols-3 gap-2">

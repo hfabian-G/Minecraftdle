@@ -74,7 +74,7 @@ const ItemSelection: React.FC = () => {
   ];
 
   return (
-    <div className="bg-gray-900 p-4 rounded-xl">
+    <div className="bg-gray-900 p-4 rounded-xl shadow-2xl shadow-black/50">
       <h2 className="text-white text-xl mb-4">Available Items</h2>
       <div className="grid grid-cols-6 gap-2">
         {items.map((item) => (
