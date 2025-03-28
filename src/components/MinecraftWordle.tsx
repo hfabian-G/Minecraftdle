@@ -33,8 +33,22 @@ const handleReset = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="min-h-screen bg-gray-800 text-white p-8">
-        <h1 className="text-4xl font-bold text-center mb-8">Minecraftdle</h1>
-        <h2 className="text-2xl font-bold text-center mb-8">Try to craft the Recipe of the Day!</h2>
+        <div className="relative mb-8">
+          <div className="flex flex-col items-center gap-4 p-4">
+            <h1 className="text-4xl font-bold text-white">Minecraftdle</h1>
+            <p className="text-gray-300 text-center">
+              Craft the recipe of the day! Place items in the crafting grid and click submit.
+            </p>
+          </div>
+          <a 
+            href="https://www.paypal.com/donate/?business=637V3U83UBWLL&no_recurring=1&item_name=A+dollar+or+two+makes+all+the+difference&currency_code=USD" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="absolute top-0 right-0 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200"
+          >
+            Donate
+          </a>
+        </div>
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-col items-center gap-8">
             <CraftingGrid grid={grid} setGrid={setGrid} />
@@ -72,16 +86,25 @@ const handleReset = () => {
 
         {/* Success Modal */}
         {showSuccess && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <div className="bg-gray-800 p-8 rounded-lg text-center">
-              <h2 className="text-2xl font-bold mb-4">Success!</h2>
-              <p>You found today's recipe!</p>
-              <button 
-                className="mt-4 px-4 py-2 bg-green-500 rounded hover:bg-green-600"
-                onClick={() => setShowSuccess(false)}
-              >
-                Close
-              </button>
+          <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+            <div className="bg-gray-800 p-8 rounded-lg shadow-xl max-w-md w-full mx-4 border-4 border-green-500">
+              <div className="flex flex-col items-center gap-4">
+                <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h2 className="text-3xl font-bold text-green-400 text-center">Success!</h2>
+                <p className="text-white text-center text-lg">
+                  You've successfully crafted the recipe of the day!
+                </p>
+                <button 
+                  className="mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200 shadow-lg"
+                  onClick={() => setShowSuccess(false)}
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         )}

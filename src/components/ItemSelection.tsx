@@ -71,6 +71,17 @@ const ItemSelection: React.FC = () => {
     { id: 'iron_ingot', name: 'Iron Ingot' },
     { id: 'diamond', name: 'Diamond' },
     { id: 'log', name: 'Oak Log' },
+    { id: 'coal', name: 'Coal' },
+    { id: 'flint', name: 'Flint' },
+    { id: 'book', name: 'Book' },
+    { id: 'redstone', name: 'Redstone' },
+    { id: 'compass', name: 'Compass' },
+    { id: 'wool', name: 'Wool' },
+    { id: 'string', name: 'String' },
+    { id: 'feather', name: 'Feather' },
+    { id: 'gold_ingot', name: 'Gold Ingot' },
+    { id: 'paper', name: 'Paper' },
+    { id: 'sugarcane', name: 'Sugar Cane' }
   ];
 
   return (

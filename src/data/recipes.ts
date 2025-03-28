@@ -208,8 +208,204 @@ export const recipes: Recipe[] = [
       name: 'Furnace',
       count: 1
     }
+  },
+  {
+    // Wooden Door
+    pattern: [
+      'planks', 'planks', null,
+      'planks', 'planks', null,
+      'planks', 'planks', null
+    ],
+    result: {
+      id: 'wooden_door',
+      name: 'Wooden Door',
+      count: 3
+    }
+  },
+  {
+    // Bed
+    pattern: [
+      'wool', 'wool', 'wool',
+      'planks', 'planks', 'planks',
+      null, null, null
+    ],
+    result: {
+      id: 'bed',
+      name: 'Bed',
+      count: 1
+    }
+  },
+  {
+    // Torch (yields 4)
+    pattern: [
+      'coal', null, null,
+      'stick', null, null,
+      null, null, null
+    ],
+    result: {
+      id: 'torch',
+      name: 'Torch',
+      count: 4
+    }
+  },
+  {
+    // Ladder (yields 3)
+    pattern: [
+      'stick', null, 'stick',
+      'stick', 'stick', 'stick',
+      'stick', null, 'stick'
+    ],
+    result: {
+      id: 'ladder',
+      name: 'Ladder',
+      count: 3
+    }
+  },
+  {
+    // Bow
+    pattern: [
+      null, 'stick', 'string',
+      'stick', null, 'string',
+      null, 'stick', 'string'
+    ],
+    result: {
+      id: 'bow',
+      name: 'Bow',
+      count: 1
+    }
+  },
+  {
+    // Arrow (yields 4)
+    pattern: [
+      'flint', null, null,
+      'stick', null, null,
+      'feather', null, null
+    ],
+    result: {
+      id: 'arrow',
+      name: 'Arrow',
+      count: 4
+    }
+  },
+  {
+    // Shield
+    pattern: [
+      'planks', 'iron_ingot', 'planks',
+      'planks', 'planks', 'planks',
+      null, 'planks', null
+    ],
+    result: {
+      id: 'shield',
+      name: 'Shield',
+      count: 1
+    }
+  },
+  {
+    // Boat
+    pattern: [
+      'planks', null, 'planks',
+      'planks', 'planks', 'planks',
+      null, null, null
+    ],
+    result: {
+      id: 'boat',
+      name: 'Boat',
+      count: 1
+    }
+  },
+  {
+    // Bookshelf
+    pattern: [
+      'planks', 'planks', 'planks',
+      'book', 'book', 'book',
+      'planks', 'planks', 'planks'
+    ],
+    result: {
+      id: 'bookshelf',
+      name: 'Bookshelf',
+      count: 1
+    }
+  },
+  {
+    // Bucket
+    pattern: [
+      'iron_ingot', null, 'iron_ingot',
+      null, 'iron_ingot', null,
+      null, null, null
+    ],
+    result: {
+      id: 'bucket',
+      name: 'Bucket',
+      count: 1
+    }
+  },
+  {
+    // Fishing Rod
+    pattern: [
+      null, null, 'stick',
+      null, 'stick', 'string',
+      'stick', null, 'string'
+    ],
+    result: {
+      id: 'fishing_rod',
+      name: 'Fishing Rod',
+      count: 1
+    }
+  },
+  {
+    // Clock
+    pattern: [
+      null, 'gold_ingot', null,
+      'gold_ingot', 'redstone', 'gold_ingot',
+      null, 'gold_ingot', null
+    ],
+    result: {
+      id: 'clock',
+      name: 'Clock',
+      count: 1
+    }
+  },
+  {
+    // Compass
+    pattern: [
+      null, 'iron_ingot', null,
+      'iron_ingot', 'redstone', 'iron_ingot',
+      null, 'iron_ingot', null
+    ],
+    result: {
+      id: 'compass',
+      name: 'Compass',
+      count: 1
+    }
+  },
+  {
+    // Map
+    pattern: [
+      'paper', 'paper', 'paper',
+      'paper', 'compass', 'paper',
+      'paper', 'paper', 'paper'
+    ],
+    result: {
+      id: 'map',
+      name: 'Map',
+      count: 1
+    }
+  },
+  {
+    // Paper (yields 3)
+    pattern: [
+      'sugarcane', 'sugarcane', 'sugarcane',
+      null, null, null,
+      null, null, null
+    ],
+    result: {
+      id: 'paper',
+      name: 'Paper',
+      count: 3
+    }
   }
 ];
+
 
 function afixTopLeft(pattern: (string | null)[]): (string | null)[] {
   let isFound: boolean = false;
@@ -288,7 +484,7 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
     message = `You have ${correctPlacements} item${correctPlacements > 1 ? 's' : ''} in the right spot! Keep trying!`;
     message += `\nThe Recipe of the Day contains ${itemsInGridAndRecipe.join(", ")}`;
   } else {
-    message = "No matches, keep trying!";
+    message = "\nNo matches, keep trying!";
   }
 
   return {

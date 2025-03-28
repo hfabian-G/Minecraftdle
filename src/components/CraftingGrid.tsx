@@ -129,7 +129,7 @@ const CraftingGrid: React.FC<CraftingGridProps> = ({ grid, setGrid }) => {
         </div>
 
         <div className="flex flex-col items-center">
-          <div className={`w-20 h-20 border-2 ${craftingResult ? 'border-green-500 bg-gray-800' : 'border-gray-700 bg-gray-900'} rounded-lg flex items-center justify-center`}>
+          <div className={`relative group w-20 h-20 border-2 ${craftingResult ? 'border-green-500 bg-gray-800' : 'border-gray-700 bg-gray-900'} rounded-lg flex items-center justify-center`}>
             {craftingResult && (
               <div className="relative">
                 <img
@@ -145,6 +145,14 @@ const CraftingGrid: React.FC<CraftingGridProps> = ({ grid, setGrid }) => {
                 )}
               </div>
             )}
+            <div className="absolute -top-2 -right-85 bg-gray-800 text-white text-xs p-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+              If nothing shows up when you enter a valid recipe, either.. 
+              <br/><br/>
+              1)  Minecraftdle doesn't have that recipe or<br/>
+              2)  There is a symmetric construction that you should try <br/>
+              i.e axes should be crafted with the blade on the left side.
+        
+            </div>
           </div>
           {craftingResult && (
             <p className="text-gray-300 text-sm mt-2">{craftingResult.name}</p>
