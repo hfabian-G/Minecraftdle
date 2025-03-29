@@ -555,7 +555,7 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
 
   // Count correct placements
   let correctPlacements = 0;
-  let itemsInGridAndRecipe: string[] = [];
+  const itemsInGridAndRecipe: string[] = [];
   afixedGrid.forEach((item, index) => {
     if (item != null &&!itemsInGridAndRecipe.includes(item) && afixedRecipeOfTheDay.includes(item)){
       itemsInGridAndRecipe.push(item);
