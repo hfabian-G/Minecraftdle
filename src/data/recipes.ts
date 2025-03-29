@@ -403,6 +403,110 @@ export const recipes: Recipe[] = [
       name: 'Paper',
       count: 3
     }
+  },
+  {
+    // Diamond Shovel
+    pattern: [
+      null, 'diamond', null,
+      null, 'stick', null,
+      null, 'stick', null
+    ],
+    result: {
+      id: 'diamond_shovel',
+      name: 'Diamond Shovel',
+      count: 1
+    }
+  },
+  {
+    // Iron Shovel
+    pattern: [
+      null, 'iron_ingot', null,
+      null, 'stick', null,
+      null, 'stick', null
+    ],
+    result: {
+      id: 'iron_shovel',
+      name: 'Iron Shovel',
+      count: 1
+    }
+  },
+  {
+    // Wooden Shovel
+    pattern: [
+      null, 'planks', null,
+      null, 'stick', null,
+      null, 'stick', null
+    ],
+    result: {
+      id: 'wooden_shovel',
+      name: 'Wooden Shovel',
+      count: 1
+    }
+  },
+  {
+    // Stone Shovel
+    pattern: [
+      null, 'cobblestone', null,
+      null, 'stick', null,
+      null, 'stick', null
+    ],
+    result: {
+      id: 'stone_shovel',
+      name: 'Stone Shovel',
+      count: 1
+    }
+  },
+  {
+    // Diamond Hoe
+    pattern: [
+      'diamond', 'diamond', null,
+      null, 'stick', null,
+      null, 'stick', null
+    ],
+    result: {
+      id: 'diamond_hoe',
+      name: 'Diamond Hoe',
+      count: 1
+    }
+  },
+  {
+    // Stone Hoe
+    pattern: [
+      'cobblestone', 'cobblestone', null,
+      null, 'stick', null,
+      null, 'stick', null
+    ],
+    result: {
+      id: 'stone_hoe',
+      name: 'Stone Hoe',
+      count: 1
+    }
+  },
+  {
+    // Iron Hoe
+    pattern: [
+      'iron_ingot', 'iron_ingot', null,
+      null, 'stick', null,
+      null, 'stick', null
+    ],
+    result: {
+      id: 'iron_hoe',
+      name: 'Iron Hoe',
+      count: 1
+    }
+  },
+  {
+    // Wooden Hoe
+    pattern: [
+      'planks', 'planks', null,
+      null, 'stick', null,
+      null, 'stick', null
+    ],
+    result: {
+      id: 'wooden_hoe',
+      name: 'Wooden Hoe',
+      count: 1
+    }
   }
 ];
 
