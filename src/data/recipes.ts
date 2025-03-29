@@ -599,19 +599,13 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
 }
 
 export function checkRecipe(grid: (string | null)[]): Recipe['result'] | null {
-  // Helper function to check if two patterns match
-  
-
-
-  const stoneSwordPattern = recipes[6].pattern;
-  // Check each recipe
   for (const recipe of recipes) {
-    const afixedGrid = afixTopLeft([...grid]);
-    const afixedRecipe = afixTopLeft([...recipe.pattern]);
-    if (patternsMatch(afixedGrid, afixedRecipe)) {
+    const itemsInGridAndRecipe = grid.filter((item, index) => 
+      item === recipe.pattern[index]
+    ).length;
+    if (itemsInGridAndRecipe === recipe.pattern.length) {
       return recipe.result;
     }
   }
-
   return null;
 } 

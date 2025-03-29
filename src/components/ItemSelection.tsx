@@ -3,6 +3,7 @@
 import React, { useRef, useEffect } from 'react';
 import { useDrag } from 'react-dnd';
 import { useSelectedItem } from '@/context/SelectedItemContext';
+import Image from 'next/image';
 
 interface ItemProps {
   id: string;
@@ -53,10 +54,12 @@ const Item: React.FC<ItemProps> = ({ id, name }) => {
         isDragging ? 'opacity-50' : ''
       }`}
     >
-      <img
+      <Image
         src={`/items/${id}.png`}
         alt={name}
-        className="w-12 h-12 object-contain"
+        width={48}
+        height={48}
+        className="object-contain"
         draggable={false}
       />
     </div>

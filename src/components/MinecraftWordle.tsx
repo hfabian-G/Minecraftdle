@@ -96,7 +96,7 @@ const handleReset = () => {
                 </div>
                 <h2 className="text-3xl font-bold text-green-400 text-center">Success!</h2>
                 <p className="text-white text-center text-lg">
-                  You've successfully crafted the recipe of the day!
+                  You&apos;ve successfully crafted the recipe of the day!
                 </p>
                 <button 
                   className="mt-4 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200 shadow-lg"

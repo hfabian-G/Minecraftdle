@@ -4,11 +4,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 import { checkRecipe } from '@/data/recipes';
 import { useSelectedItem } from '@/context/SelectedItemContext';
+import Image from 'next/image';
 
 interface CraftingSlotProps {
   index: number;
   item: string | null;
-  onDrop: (item: any, index: number) => void;
+  onDrop: (item: { id: string }, index: number) => void;
   onRemove: (index: number) => void;
   onClick: (index: number) => void;
 }
@@ -16,7 +17,7 @@ interface CraftingSlotProps {
 const CraftingSlot: React.FC<CraftingSlotProps> = ({ index, item, onDrop, onRemove, onClick }) => {
   const ref = useRef<HTMLDivElement>(null);
   const { selectedItem } = useSelectedItem();
-  const [{ isOver }, drop] = useDrop<any, void, { isOver: boolean }>(() => ({
+  const [{ isOver }, drop] = useDrop<{ id: string }, void, { isOver: boolean }>(() => ({
     accept: 'item',
     drop: (droppedItem) => onDrop(droppedItem, index),
     collect: (monitor) => ({
@@ -50,10 +51,12 @@ const CraftingSlot: React.FC<CraftingSlotProps> = ({ index, item, onDrop, onRemo
       }`}
     >
       {item && (
-        <img
+        <Image
           src={`/items/${item}.png`}
           alt={item}
-          className="w-16 h-16 object-contain"
+          width={64}
+          height={64}
+          className="object-contain"
           draggable={false}
         />
       )}
@@ -70,7 +73,7 @@ const CraftingGrid: React.FC<CraftingGridProps> = ({ grid, setGrid }) => {
   const [craftingResult, setCraftingResult] = useState<{id: string; name: string; count: number} | null>(null);
   const { selectedItem } = useSelectedItem();
 
-  const handleDrop = (item: any, index: number) => {
+  const handleDrop = (item: { id: string }, index: number) => {
     setGrid(prev => {
       const newGrid = [...prev];
       newGrid[index] = item.id;
@@ -132,10 +135,12 @@ const CraftingGrid: React.FC<CraftingGridProps> = ({ grid, setGrid }) => {
           <div className={`relative group w-20 h-20 border-2 ${craftingResult ? 'border-green-500 bg-gray-800' : 'border-gray-700 bg-gray-900'} rounded-lg flex items-center justify-center`}>
             {craftingResult && (
               <div className="relative">
-                <img
+                <Image
                   src={`/items/${craftingResult.id}.png`}
                   alt={craftingResult.name}
-                  className="w-16 h-16 object-contain"
+                  width={64}
+                  height={64}
+                  className="object-contain"
                   draggable={false}
                 />
                 {craftingResult.count > 1 && (
@@ -148,7 +153,7 @@ const CraftingGrid: React.FC<CraftingGridProps> = ({ grid, setGrid }) => {
             <div className="absolute -top-2 -right-85 bg-gray-800 text-white text-xs p-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
               If nothing shows up when you enter a valid recipe, either.. 
               <br/><br/>
-              1)  Minecraftdle doesn't have that recipe or<br/>
+              1)  Minecraftdle doesn&apos;t have that recipe or<br/>
               2)  There is a symmetric construction that you should try <br/>
               i.e axes should be crafted with the blade on the left side.
         
