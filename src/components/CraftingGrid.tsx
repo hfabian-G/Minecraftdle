@@ -150,12 +150,10 @@ const CraftingGrid: React.FC<CraftingGridProps> = ({ grid, setGrid }) => {
                 )}
               </div>
             )}
-            <div className="absolute -top-2 -right-85 bg-gray-800 text-white text-xs p-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-              If nothing shows up when you enter a valid recipe, either.. 
-              <br/><br/>
-              1)  Minecraftdle doesn&apos;t have that recipe or<br/>
-              2)  There is a symmetric construction that you should try <br/>
-              i.e axes should be crafted with the blade on the left side.
+            <div className="absolute -top-2 -right-60 bg-gray-800 text-white text-xs p-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+              If nothing shows up when you enter a valid 
+              <br/>
+              recipe, then it has not been implemented yet.
         
             </div>
           </div>

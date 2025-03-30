@@ -544,7 +544,11 @@ export function getRecipeOfTheDay(): Recipe {
   // Use the date as seed for pseudo-random selection
   
   const recipeOfTheDay = recipes[seed];
-  console.log(recipeOfTheDay.pattern);
+
+  for (let i = 0; i < recipes.length; i++){
+    if(recipes[i].result.id == "iron_axe") return recipes[i];
+  }
+
   return recipeOfTheDay;
 }
 
@@ -553,6 +557,13 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
   const afixedGrid = afixTopLeft([...grid]);
   const afixedRecipeOfTheDay = afixTopLeft([...recipeOfTheDay.pattern]);
 
+  if(checkRecipe(grid) == getRecipeOfTheDay().result){
+    return {
+      isMatch: true,
+      correctPlacements: 9,
+      message: "Perfect! You found today's recipe!"
+    };
+  }
   // Count correct placements
   let correctPlacements = 0;
   const itemsInGridAndRecipe: string[] = [];
@@ -573,15 +584,6 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
     }
   });
 
-
-  if (patternsMatch(afixedGrid, afixedRecipeOfTheDay)) {
-    return {
-      isMatch: true,
-      correctPlacements,
-      message: "Perfect! You found today's recipe!"
-    };
-  }
-
   // Provide encouraging feedback based on correct placements
   let message = "";
   if (correctPlacements > 0) {
@@ -598,15 +600,37 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
   };
 }
 
+function mirrorAcrossXAxis(pattern: (string | null)[]): (string | null)[] {
+  let holdingvar: string | null
+  holdingvar = pattern[0];
+  pattern[0] = pattern[2];
+  pattern[2] = holdingvar;
+  holdingvar = pattern[3];
+  pattern[3] = pattern[5];
+  pattern[5] = holdingvar;
+  holdingvar = pattern[6];
+  pattern[6] = pattern[8];
+  pattern[8] = holdingvar;
+  return pattern;
+}
+
 export function checkRecipe(grid: (string | null)[]): Recipe['result'] | null {
   const afixedGrid = afixTopLeft([...grid]);
   for (const recipe of recipes) {
     const afixedRecipe = afixTopLeft([...recipe.pattern]);
-    const itemsInGridAndRecipe = afixedGrid.filter((item, index) => 
-      item === afixedRecipe[index]
+    const afixedRecipeHorizontal = afixTopLeft([...mirrorAcrossXAxis([...recipe.pattern])]);
+    let itemsInGridAndRecipe = afixedGrid.filter((item, index) => 
+      item === afixedRecipe[index] || item === afixedRecipeHorizontal[index]
     ).length;
     if (itemsInGridAndRecipe === afixedRecipe.length) {
       return recipe.result;
+    } else {
+      let itemsInGridAndRecipe = afixedGrid.filter((item, index) =>
+        item === afixedRecipe[index] || item === afixedRecipeHorizontal[index]
+      ).length;
+      if (itemsInGridAndRecipe === afixedRecipe.length) {
+        return recipe.result;
+      }
     }
   }
   return null;
