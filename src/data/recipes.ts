@@ -530,12 +530,6 @@ function afixTopLeft(pattern: (string | null)[]): (string | null)[] {
   return pattern;
 }
 
-function patternsMatch(pattern1: (string | null)[], pattern2: (string | null)[]): boolean{
-  return pattern1.every((item, index) => {
-    return item === pattern2[index];
-  });
-}
-
 export function getRecipeOfTheDay(): Recipe {
   //const centralTime = new Date().toLocaleString("en-US", { timeZone: "America/Chicago" });
   //const today = new Date(centralTime).setHours(18, 0, 0, 0);
@@ -545,15 +539,19 @@ export function getRecipeOfTheDay(): Recipe {
   
   const recipeOfTheDay = recipes[seed];
 
+  /** 
   for (let i = 0; i < recipes.length; i++){
     if(recipes[i].result.id == "iron_axe") return recipes[i];
   }
+  */
+    
 
   return recipeOfTheDay;
 }
 
 export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
   const recipeOfTheDay = getRecipeOfTheDay();
+  console.log(recipeOfTheDay.result.id);
   const afixedGrid = afixTopLeft([...grid]);
   const afixedRecipeOfTheDay = afixTopLeft([...recipeOfTheDay.pattern]);
 
@@ -619,18 +617,11 @@ export function checkRecipe(grid: (string | null)[]): Recipe['result'] | null {
   for (const recipe of recipes) {
     const afixedRecipe = afixTopLeft([...recipe.pattern]);
     const afixedRecipeHorizontal = afixTopLeft([...mirrorAcrossXAxis([...recipe.pattern])]);
-    let itemsInGridAndRecipe = afixedGrid.filter((item, index) => 
+    const itemsInGridAndRecipe = afixedGrid.filter((item, index) => 
       item === afixedRecipe[index] || item === afixedRecipeHorizontal[index]
     ).length;
     if (itemsInGridAndRecipe === afixedRecipe.length) {
       return recipe.result;
-    } else {
-      let itemsInGridAndRecipe = afixedGrid.filter((item, index) =>
-        item === afixedRecipe[index] || item === afixedRecipeHorizontal[index]
-      ).length;
-      if (itemsInGridAndRecipe === afixedRecipe.length) {
-        return recipe.result;
-      }
     }
   }
   return null;
