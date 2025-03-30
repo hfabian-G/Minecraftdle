@@ -539,12 +539,17 @@ export function getRecipeOfTheDay(): Recipe {
   
   const recipeOfTheDay = recipes[seed];
 
-  /** 
+  /**
   for (let i = 0; i < recipes.length; i++){
     if(recipes[i].result.id == "iron_axe") return recipes[i];
   }
   */
+  
     
+  
+  for (let i = 0; i < recipes.length; i++){
+    if(recipes[i].result.id == "wooden_door") return recipes[i];
+  }
 
   return recipeOfTheDay;
 }
@@ -555,7 +560,7 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
   const afixedGrid = afixTopLeft([...grid]);
   const afixedRecipeOfTheDay = afixTopLeft([...recipeOfTheDay.pattern]);
 
-  if(checkRecipe(grid) == getRecipeOfTheDay().result){
+  if(checkRecipe([...grid]) == getRecipeOfTheDay().result){
     return {
       isMatch: true,
       correctPlacements: 9,
@@ -563,6 +568,19 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
     };
   }
   // Count correct placements
+  // There is a bug where if you are doing a symmetric recipe the app may not
+  // recognize the amount of correct placements or correct items.
+  // The test condition is have wooden door as the recipe of the day
+  // and do [iron, iron, null, iron, stick, null, null, stick, plank]
+  // and right now it will not recognize that planks is there.
+
+  // There is also a bug where if you do the reverse of the recipe of the day
+  // i.e iron axe as the recipe of the day and do 
+  // [null, iron, iron, null, stick, iron, null, stick, planks]
+  // it will tell you that you have 2 items in the right spot when you actually
+  // have 5
+
+  // these two problems are likely fixed with the exact same code
   let correctPlacements = 0;
   const itemsInGridAndRecipe: string[] = [];
   afixedGrid.forEach((item, index) => {
@@ -618,9 +636,13 @@ export function checkRecipe(grid: (string | null)[]): Recipe['result'] | null {
     const afixedRecipe = afixTopLeft([...recipe.pattern]);
     const afixedRecipeHorizontal = afixTopLeft([...mirrorAcrossXAxis([...recipe.pattern])]);
     const itemsInGridAndRecipe = afixedGrid.filter((item, index) => 
-      item === afixedRecipe[index] || item === afixedRecipeHorizontal[index]
+      item === afixedRecipe[index]
     ).length;
-    if (itemsInGridAndRecipe === afixedRecipe.length) {
+    const itemsInGridAndMirroredRecipe = afixedGrid.filter((item,index) => 
+      item === afixedRecipeHorizontal[index]
+    ).length;
+    const itemsInGridAndRecipeMax = Math.max(itemsInGridAndRecipe, itemsInGridAndMirroredRecipe);
+    if (itemsInGridAndRecipeMax === afixedRecipe.length) {
       return recipe.result;
     }
   }
