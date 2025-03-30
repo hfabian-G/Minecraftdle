@@ -546,10 +546,11 @@ export function getRecipeOfTheDay(): Recipe {
   */
   
     
-  
+  /**
   for (let i = 0; i < recipes.length; i++){
     if(recipes[i].result.id == "wooden_door") return recipes[i];
   }
+  */
 
   return recipeOfTheDay;
 }
@@ -581,6 +582,8 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
   // have 5
 
   // these two problems are likely fixed with the exact same code
+  // should be an easy fix to just do it for both the recipe and the mirrored recipe
+  // and then take the max of the two
   let correctPlacements = 0;
   const itemsInGridAndRecipe: string[] = [];
   afixedGrid.forEach((item, index) => {
