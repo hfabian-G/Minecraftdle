@@ -599,11 +599,13 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
 }
 
 export function checkRecipe(grid: (string | null)[]): Recipe['result'] | null {
+  const afixedGrid = afixTopLeft([...grid]);
   for (const recipe of recipes) {
-    const itemsInGridAndRecipe = grid.filter((item, index) => 
-      item === recipe.pattern[index]
+    const afixedRecipe = afixTopLeft([...recipe.pattern]);
+    const itemsInGridAndRecipe = afixedGrid.filter((item, index) => 
+      item === afixedRecipe[index]
     ).length;
-    if (itemsInGridAndRecipe === recipe.pattern.length) {
+    if (itemsInGridAndRecipe === afixedRecipe.length) {
       return recipe.result;
     }
   }
