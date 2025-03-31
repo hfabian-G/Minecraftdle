@@ -10,7 +10,8 @@ interface Recipe {
 interface RecipeFeedback {
   isMatch: boolean;
   correctPlacements: number;
-  message: string;
+  messageCorrectPlacements: string;
+  messageItemsPresent: string;
 }
 
 export const recipes: Recipe[] = [
@@ -141,6 +142,19 @@ export const recipes: Recipe[] = [
     result: {
       id: 'iron_axe',
       name: 'Iron Axe',
+      count: 1
+    }
+  },
+  {
+    // Iron Axe
+    pattern: [
+      'planks', 'planks', null,
+      'planks', 'stick', null,
+      null, 'stick', null
+    ],
+    result: {
+      id: 'wooden_axe',
+      name: 'Wooden Axe',
       count: 1
     }
   },
@@ -546,11 +560,11 @@ export function getRecipeOfTheDay(): Recipe {
   */
   
     
-  /**
+  
   for (let i = 0; i < recipes.length; i++){
     if(recipes[i].result.id == "wooden_door") return recipes[i];
   }
-  */
+  
 
   return recipeOfTheDay;
 }
@@ -560,62 +574,73 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
   console.log(recipeOfTheDay.result.id);
   const afixedGrid = afixTopLeft([...grid]);
   const afixedRecipeOfTheDay = afixTopLeft([...recipeOfTheDay.pattern]);
-
+  const afixedRecipeOfTheDayHorizontal = afixTopLeft([...mirrorAcrossXAxis([...recipeOfTheDay.pattern])]);
   if(checkRecipe([...grid]) == getRecipeOfTheDay().result){
     return {
       isMatch: true,
       correctPlacements: 9,
-      message: "Perfect! You found today's recipe!"
+      messageCorrectPlacements: "Perfect! You found today's recipe!",
+      messageItemsPresent: ""
     };
   }
-  // Count correct placements
-  // There is a bug where if you are doing a symmetric recipe the app may not
-  // recognize the amount of correct placements or correct items.
-  // The test condition is have wooden door as the recipe of the day
-  // and do [iron, iron, null, iron, stick, null, null, stick, plank]
-  // and right now it will not recognize that planks is there.
 
-  // There is also a bug where if you do the reverse of the recipe of the day
-  // i.e iron axe as the recipe of the day and do 
-  // [null, iron, iron, null, stick, iron, null, stick, planks]
-  // it will tell you that you have 2 items in the right spot when you actually
-  // have 5
-
-  // these two problems are likely fixed with the exact same code
-  // should be an easy fix to just do it for both the recipe and the mirrored recipe
-  // and then take the max of the two
-  let correctPlacements = 0;
+  let correctPlacementsRegular = 0;
+  let correctPlacementsHorizontal = 0;
   const itemsInGridAndRecipe: string[] = [];
   afixedGrid.forEach((item, index) => {
     if (item != null &&!itemsInGridAndRecipe.includes(item) && afixedRecipeOfTheDay.includes(item)){
       itemsInGridAndRecipe.push(item);
     }
     if (item === afixedRecipeOfTheDay[index] && item != null) {
-      correctPlacements++;
+      correctPlacementsRegular++;
     }
-  });
-  
-  
-  itemsInGridAndRecipe.forEach((item, index) => {
-    itemsInGridAndRecipe[index] = item + '(s)';
-    if (index == itemsInGridAndRecipe.length - 1 && index != 0) {
-      itemsInGridAndRecipe[index] = 'and ' + itemsInGridAndRecipe[index];
+    if (item === afixedRecipeOfTheDayHorizontal[index] && item != null) {
+      correctPlacementsHorizontal++;
     }
   });
 
+  const correctPlacements = Math.max(correctPlacementsRegular, correctPlacementsHorizontal);
+  
+  
+  // Format the items for display
+  const formattedItems = itemsInGridAndRecipe.map((item, index) => {
+    let formattedItem = item.replace(/_/g, ' ');
+    // Capitalize first letter
+    formattedItem = formattedItem.charAt(0).toUpperCase() + formattedItem.slice(1);
+    
+    // Add (s) if not already plural
+    if (!formattedItem.endsWith('s')) {
+      formattedItem += '(s)';
+    }
+    
+    // Add 'and' for the last item if there's more than one
+    if (index === itemsInGridAndRecipe.length - 1 && index !== 0) {
+      formattedItem = 'and ' + formattedItem;
+    }
+    
+    return formattedItem;
+  });
+
+  
   // Provide encouraging feedback based on correct placements
-  let message = "";
+  let messageCorrectPlacements = "";
+  let messageItemsPresent = "";
   if (correctPlacements > 0) {
-    message = `You have ${correctPlacements} item${correctPlacements > 1 ? 's' : ''} in the right spot! Keep trying!`;
-    message += `\nThe Recipe of the Day contains ${itemsInGridAndRecipe.join(", ")}`;
+    messageItemsPresent = `The Recipe of the Day contains ${formattedItems.join(", ")}`;
+    messageCorrectPlacements = `You have ${correctPlacements} item${correctPlacements > 1 ? 's' : ''} in the right spot! Keep trying!`;
+  } else if (formattedItems.length > 0) {
+    messageItemsPresent = `The Recipe of the Day contains ${formattedItems.join(", ")}`;
   } else {
-    message = "\nNo matches, keep trying!";
+    messageCorrectPlacements = "No matches, keep trying!";
   }
+
+  
 
   return {
     isMatch: false,
     correctPlacements,
-    message
+    messageCorrectPlacements,
+    messageItemsPresent
   };
 }
 

@@ -10,9 +10,10 @@ import { submitRecipe } from '@/data/recipes';
 const MinecraftWordle: React.FC = () => {
   const [grid, setGrid] = useState<(string | null)[]>(Array(9).fill(null));
   const [showSuccess, setShowSuccess] = useState(false);
-  const [feedback, setFeedback] = useState<string | null>(null);
-  const [feedbackMessage1, setFeedbackMessage1] = useState<string | null>(null);
-  const [feedbackMessage2, setFeedbackMessage2] = useState<string | null>(null);
+  const [messageCorrectPlacements, setMessageCorrectPlacements] = useState<string | null>(null);
+  const [messageItemsPresent, setMessageItemsPresent] = useState<string | null>(null);
+
+
 
 const handleReset = () => {
   setGrid(Array(9).fill(null));
@@ -23,11 +24,11 @@ const handleReset = () => {
     if (result.isMatch) {
       setShowSuccess(true);
     }
-    const message1 = result.message.split("\n")[0];
-    const message2 = result.message.split("\n")[1];
-    setFeedback(result.message);
-    setFeedbackMessage1(message1);
-    setFeedbackMessage2(message2);
+    console.log(result.messageCorrectPlacements);
+    console.log(result.messageItemsPresent);
+    
+    setMessageCorrectPlacements(result.messageCorrectPlacements);
+    setMessageItemsPresent(result.messageItemsPresent);
   };
 
   return (
@@ -67,16 +68,16 @@ const handleReset = () => {
                   Reset Crafting Grid
                 </button>
               </div>
-              {feedback && (
+              {messageItemsPresent && (
                 <p className="text-center text-yellow-400">
-                  {feedbackMessage2}
+                  {messageItemsPresent}
                 </p>
                 
               )}
               
-              {feedback && (
+              {messageCorrectPlacements && (
                 <p className="text-center text-green-400">
-                  {feedbackMessage1}
+                  {messageCorrectPlacements}
                 </p>
 
               )}
