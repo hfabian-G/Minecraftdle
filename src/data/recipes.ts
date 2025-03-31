@@ -146,7 +146,7 @@ export const recipes: Recipe[] = [
     }
   },
   {
-    // Iron Axe
+    // Wooden Axe
     pattern: [
       'planks', 'planks', null,
       'planks', 'stick', null,
@@ -155,6 +155,19 @@ export const recipes: Recipe[] = [
     result: {
       id: 'wooden_axe',
       name: 'Wooden Axe',
+      count: 1
+    }
+  },
+  {
+    // Stone Axe
+    pattern: [
+      'cobblestone', 'cobblestone', null,
+      'cobblestone', 'stick', null,
+      null, 'stick', null
+    ],
+    result: {
+      id: 'stone_axe',
+      name: 'Stone Axe',
       count: 1
     }
   },
