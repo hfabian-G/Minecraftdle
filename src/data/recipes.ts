@@ -560,10 +560,11 @@ export function getRecipeOfTheDay(): Recipe {
   */
   
     
-  
+  /**
   for (let i = 0; i < recipes.length; i++){
     if(recipes[i].result.id == "wooden_door") return recipes[i];
   }
+  */
   
 
   return recipeOfTheDay;
@@ -574,7 +575,7 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
   console.log(recipeOfTheDay.result.id);
   const afixedGrid = afixTopLeft([...grid]);
   const afixedRecipeOfTheDay = afixTopLeft([...recipeOfTheDay.pattern]);
-  const afixedRecipeOfTheDayHorizontal = afixTopLeft([...mirrorAcrossXAxis([...recipeOfTheDay.pattern])]);
+  const afixedRecipeOfTheDayVertical = afixTopLeft([...mirrorAcrossXAxis([...recipeOfTheDay.pattern])]);
   if(checkRecipe([...grid]) == getRecipeOfTheDay().result){
     return {
       isMatch: true,
@@ -585,7 +586,7 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
   }
 
   let correctPlacementsRegular = 0;
-  let correctPlacementsHorizontal = 0;
+  let correctPlacementsVertical = 0;
   const itemsInGridAndRecipe: string[] = [];
   afixedGrid.forEach((item, index) => {
     if (item != null &&!itemsInGridAndRecipe.includes(item) && afixedRecipeOfTheDay.includes(item)){
@@ -594,12 +595,12 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
     if (item === afixedRecipeOfTheDay[index] && item != null) {
       correctPlacementsRegular++;
     }
-    if (item === afixedRecipeOfTheDayHorizontal[index] && item != null) {
-      correctPlacementsHorizontal++;
+    if (item === afixedRecipeOfTheDayVertical[index] && item != null) {
+      correctPlacementsVertical++;
     }
   });
 
-  const correctPlacements = Math.max(correctPlacementsRegular, correctPlacementsHorizontal);
+  const correctPlacements = Math.max(correctPlacementsRegular, correctPlacementsVertical);
   
   
   // Format the items for display
@@ -662,12 +663,12 @@ export function checkRecipe(grid: (string | null)[]): Recipe['result'] | null {
   const afixedGrid = afixTopLeft([...grid]);
   for (const recipe of recipes) {
     const afixedRecipe = afixTopLeft([...recipe.pattern]);
-    const afixedRecipeHorizontal = afixTopLeft([...mirrorAcrossXAxis([...recipe.pattern])]);
+    const afixedRecipeVertical = afixTopLeft([...mirrorAcrossXAxis([...recipe.pattern])]);
     const itemsInGridAndRecipe = afixedGrid.filter((item, index) => 
       item === afixedRecipe[index]
     ).length;
     const itemsInGridAndMirroredRecipe = afixedGrid.filter((item,index) => 
-      item === afixedRecipeHorizontal[index]
+      item === afixedRecipeVertical[index]
     ).length;
     const itemsInGridAndRecipeMax = Math.max(itemsInGridAndRecipe, itemsInGridAndMirroredRecipe);
     if (itemsInGridAndRecipeMax === afixedRecipe.length) {

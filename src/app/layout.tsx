@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Minecraftdle",
-  description: "A Minecraft Wordle clone",
+  description: "A Minecraft Wordle-like",
 };
 
 export default function RootLayout({
