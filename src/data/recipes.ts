@@ -16,7 +16,7 @@ interface RecipeFeedback {
 // -1 wrong item
 // 0 wrong spot
 // 1 correct item and spot
-export type ColorCode = |-1|0|1;
+export type ColorCode = |-2|-1|0|1;
 export type ColorCodeArray = ColorCode[];
 
 function afixTopLeft(pattern: (string | null)[]): (string | null)[] {
@@ -155,6 +155,12 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
   } else {
     colorCodes = colorCodesVertical;
   }
+
+  grid.forEach((item,index) => {
+    if(grid[index] != null && colorCodes[index] == -1){
+      colorCodes[index] = -2;
+    }
+  })
 
   return {
     isMatch: false,

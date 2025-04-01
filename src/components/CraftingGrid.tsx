@@ -114,7 +114,7 @@ const CraftingGrid: React.FC<CraftingGridProps> = ({ grid, setGrid, colorCodes }
     if(colorCode == -1) return 'border-gray-700';
     if(colorCode == 0) return 'border-yellow-500';
     if(colorCode == 1) return 'border-green-500';
-    return 'border-gray-700';
+    return 'border-red-700';
   }
 
   return (
