@@ -46,7 +46,7 @@ const Item: React.FC<ItemProps> = ({ id, name }) => {
     <div
       ref={ref}
       onClick={handleClick}
-      className={`w-16 h-16 border-2 ${
+      className={`w-13 h-13 border-2 ${
         isSelected 
           ? 'border-yellow-500 bg-gray-700' 
           : 'border-gray-700 bg-gray-800'

@@ -43,7 +43,7 @@ const CraftingSlot: React.FC<CraftingSlotProps> = ({ index, item, onDrop, onRemo
     <div
       ref={ref}
       onClick={handleClick}
-      className={`w-20 h-20 border-2 border-gray-700 bg-gray-800 rounded-lg flex items-center justify-center ${
+      className={`w-15 h-15 border-2 border-gray-700 bg-gray-800 rounded-lg flex items-center justify-center ${
         isOver ? 'border-yellow-500' : ''
       } ${
         !item && selectedItem ? 'cursor-pointer hover:border-green-500' : 
@@ -132,7 +132,7 @@ const CraftingGrid: React.FC<CraftingGridProps> = ({ grid, setGrid }) => {
         </div>
 
         <div className="flex flex-col items-center">
-          <div className={`relative group w-20 h-20 border-2 ${craftingResult ? 'border-green-500 bg-gray-800' : 'border-gray-700 bg-gray-900'} rounded-lg flex items-center justify-center`}>
+          <div className={`relative group w-15 h-15 border-2 ${craftingResult ? 'border-green-500 bg-gray-800' : 'border-gray-700 bg-gray-900'} rounded-lg flex items-center justify-center`}>
             {craftingResult && (
               <div className="relative">
                 <Image
