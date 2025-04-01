@@ -50,7 +50,7 @@ function afixRecipeToGrid(recipe: (string|null)[], grid: (string|null)[]): (stri
     if(recipe[i] != null){
       pivotItemOffset = i;
     }
-    if(grid[i] != null){
+    if(grid[i] != null && recipe.includes(grid[i])){
       afixOffset = i;
       afixOffset = afixOffset - pivotItemOffset;
       pivotItem = grid[i];
@@ -132,12 +132,12 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
     }
   });
 
-  let colorCodesRegular: ColorCodeArray = Array(9).fill(-1);
-  let colorCodesVertical: ColorCodeArray = Array(9).fill(-1);
+  const colorCodesRegular: ColorCodeArray = Array(9).fill(-1);
+  const colorCodesVertical: ColorCodeArray = Array(9).fill(-1);
   let correctPlacementsRegular = 0;
   let correctPlacementsVertical = 0;
   grid.forEach((item, index) => {
-    if(item != null &&itemsInGridAndRecipe.includes(item)){
+    if(item != null && itemsInGridAndRecipe.includes(item)){
       colorCodesRegular[index] = 0;
       colorCodesVertical[index] = 0;
     }
@@ -192,8 +192,6 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
   } else {
     messageItemsPresent = "No matches, keep trying!";
   }
-
-  
 
   return {
     isMatch: false,
