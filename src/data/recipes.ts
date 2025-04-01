@@ -18,8 +18,8 @@ interface RecipeFeedback {
 // -1 wrong item
 // 0 wrong spot
 // 1 correct item and spot
-type ColorCode = |-1|0|1;
-type ColorCodeArray = ColorCode[];
+export type ColorCode = |-1|0|1;
+export type ColorCodeArray = ColorCode[];
 
 function afixTopLeft(pattern: (string | null)[]): (string | null)[] {
   let isFound: boolean = false;

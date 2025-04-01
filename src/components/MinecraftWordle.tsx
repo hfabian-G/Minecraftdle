@@ -6,18 +6,21 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import CraftingGrid from './CraftingGrid';
 import ItemSelection from './ItemSelection';
 import { submitRecipe } from '@/data/recipes';
+import { ColorCodeArray } from '@/data/recipes';
 
 const MinecraftWordle: React.FC = () => {
   const [grid, setGrid] = useState<(string | null)[]>(Array(9).fill(null));
   const [showSuccess, setShowSuccess] = useState(false);
+  const [colorCodes, setColorCodes] = useState<ColorCodeArray>(Array(9).fill(-1))
   const [messageCorrectPlacements, setMessageCorrectPlacements] = useState<string | null>(null);
   const [messageItemsPresent, setMessageItemsPresent] = useState<string | null>(null);
 
 
 
-const handleReset = () => {
-  setGrid(Array(9).fill(null));
-}
+  const handleReset = () => {
+    setGrid(Array(9).fill(null));
+    setColorCodes(Array(9).fill(-1));
+  }
 
   const handleSubmit = () => {
     const result = submitRecipe(grid);
@@ -29,6 +32,7 @@ const handleReset = () => {
     
     setMessageCorrectPlacements(result.messageCorrectPlacements);
     setMessageItemsPresent(result.messageItemsPresent);
+    setColorCodes(result.colorCodes);
   };
 
   return (
@@ -65,7 +69,7 @@ const handleReset = () => {
           </div>
           <div className="max-w-4xl mx-auto">
             <div className="flex flex-col items-center gap-8">
-              <CraftingGrid grid={grid} setGrid={setGrid} />
+              <CraftingGrid grid={grid} setGrid={setGrid} colorCodes={colorCodes} />
               <ItemSelection />
               <div className="flex flex-col gap-2">
                 <div className="flex gap-2">

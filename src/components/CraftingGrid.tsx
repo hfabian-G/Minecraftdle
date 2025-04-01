@@ -5,6 +5,8 @@ import { useDrop } from 'react-dnd';
 import { checkRecipe } from '@/data/recipes';
 import { useSelectedItem } from '@/context/SelectedItemContext';
 import Image from 'next/image';
+import { ColorCodeArray, ColorCode } from '@/data/recipes';
+
 
 interface CraftingSlotProps {
   index: number;
@@ -12,9 +14,10 @@ interface CraftingSlotProps {
   onDrop: (item: { id: string }, index: number) => void;
   onRemove: (index: number) => void;
   onClick: (index: number) => void;
+  colorCode: string;
 }
 
-const CraftingSlot: React.FC<CraftingSlotProps> = ({ index, item, onDrop, onRemove, onClick }) => {
+const CraftingSlot: React.FC<CraftingSlotProps> = ({ index, item, onDrop, onRemove, onClick, colorCode }) => {
   const ref = useRef<HTMLDivElement>(null);
   const { selectedItem } = useSelectedItem();
   const [{ isOver }, drop] = useDrop<{ id: string }, void, { isOver: boolean }>(() => ({
@@ -43,7 +46,7 @@ const CraftingSlot: React.FC<CraftingSlotProps> = ({ index, item, onDrop, onRemo
     <div
       ref={ref}
       onClick={handleClick}
-      className={`w-15 h-15 border-2 border-gray-700 bg-gray-800 rounded-lg flex items-center justify-center ${
+      className={`w-15 h-15 border-2 ${colorCode} bg-gray-800 rounded-lg flex items-center justify-center ${
         isOver ? 'border-yellow-500' : ''
       } ${
         !item && selectedItem ? 'cursor-pointer hover:border-green-500' : 
@@ -67,9 +70,10 @@ const CraftingSlot: React.FC<CraftingSlotProps> = ({ index, item, onDrop, onRemo
 interface CraftingGridProps {
   grid: (string | null)[];
   setGrid: React.Dispatch<React.SetStateAction<(string | null)[]>>;
+  colorCodes: ColorCodeArray;
 }
 
-const CraftingGrid: React.FC<CraftingGridProps> = ({ grid, setGrid }) => {
+const CraftingGrid: React.FC<CraftingGridProps> = ({ grid, setGrid, colorCodes }) => {
   const [craftingResult, setCraftingResult] = useState<{id: string; name: string; count: number} | null>(null);
   const { selectedItem } = useSelectedItem();
 
@@ -105,6 +109,13 @@ const CraftingGrid: React.FC<CraftingGridProps> = ({ grid, setGrid }) => {
     setCraftingResult(result);
   }, [grid]);
 
+  const getBorderColor = (colorCode: ColorCode) => {
+    if(colorCode == -1) return 'border-gray-700';
+    if(colorCode == 0) return 'border-yellow-500';
+    if(colorCode == 1) return 'border-green-500';
+    return 'border-gray-700';
+  }
+
   return (
     <div className="bg-gray-900 p-6 rounded-xl shadow-2xl shadow-black/50">
       <div className="flex items-center gap-8">
@@ -118,6 +129,7 @@ const CraftingGrid: React.FC<CraftingGridProps> = ({ grid, setGrid }) => {
                 onDrop={handleDrop}
                 onRemove={handleRemove}
                 onClick={handleClick}
+                colorCode={getBorderColor(colorCodes[index])}
               />
             ))}
           </div>
