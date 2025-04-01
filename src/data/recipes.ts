@@ -557,6 +557,40 @@ function afixTopLeft(pattern: (string | null)[]): (string | null)[] {
   return pattern;
 }
 
+function afixRecipeToGrid(recipe: (string|null)[], grid: (string|null)[]): (string|null)[] {
+  let afixOffset: number = 0;
+  let pivotItem: string|null = "";
+  let pivotItemOffset: number = 0;
+  let returnArray: (string|null)[] = Array(9).fill(null);
+  
+  for(let i = 0; i < grid.length; i++){
+    if(recipe[i] != null){
+      pivotItemOffset = i;
+    }
+    if(grid[i] != null){
+      afixOffset = i;
+      console.log(afixOffset)
+      afixOffset = afixOffset - pivotItemOffset;
+      console.log(afixOffset)
+      pivotItem = grid[i];
+      break;
+    }
+  }
+  let pivotItemHit: boolean = false;
+  for(let i = 0; i < recipe.length; i++){
+    if((recipe[i] == pivotItem || pivotItemHit) && recipe[i] != null){
+      pivotItemHit = true;
+      if(i + afixOffset >= recipe.length){
+        return Array(9).fill("hey");
+      } else {
+        returnArray[i + afixOffset] = recipe[i];
+
+      }
+    }
+  }
+  return returnArray;
+}
+
 export function getRecipeOfTheDay(): Recipe {
   //const centralTime = new Date().toLocaleString("en-US", { timeZone: "America/Chicago" });
   //const today = new Date(centralTime).setHours(18, 0, 0, 0);
@@ -571,6 +605,7 @@ export function getRecipeOfTheDay(): Recipe {
     if(recipes[i].result.id == "iron_axe") return recipes[i];
   }
   */
+  
   
     
   /**
@@ -598,22 +633,34 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
     };
   }
 
-  let correctPlacementsRegular = 0;
-  let correctPlacementsVertical = 0;
+
+  let recipeOfTheDayAfixedToGrid = afixRecipeToGrid([...afixedRecipeOfTheDay], [...grid]);
+  let recipeOfTheDayAfixedToGridVertical = afixRecipeToGrid([...afixedRecipeOfTheDayVertical], [...grid]);
+  console.log(recipeOfTheDayAfixedToGrid);
+  console.log(recipeOfTheDayAfixedToGridVertical);
+
+
   const itemsInGridAndRecipe: string[] = [];
-  afixedGrid.forEach((item, index) => {
+  afixedGrid.forEach((item) => {
     if (item != null &&!itemsInGridAndRecipe.includes(item) && afixedRecipeOfTheDay.includes(item)){
       itemsInGridAndRecipe.push(item);
     }
-    if (item === afixedRecipeOfTheDay[index] && item != null) {
+  });
+
+  let correctPlacementsRegular = 0;
+  let correctPlacementsVertical = 0;
+  grid.forEach((item, index) => {
+    if (item === recipeOfTheDayAfixedToGrid[index] && item != null) {
       correctPlacementsRegular++;
     }
-    if (item === afixedRecipeOfTheDayVertical[index] && item != null) {
+    if (item === recipeOfTheDayAfixedToGridVertical[index] && item != null) {
       correctPlacementsVertical++;
     }
   });
-
-  const correctPlacements = Math.max(correctPlacementsRegular, correctPlacementsVertical);
+  let correctPlacements = 0;
+  const isAllNulls = (arr: any[]): boolean => arr.every(item => item === null);
+  
+    correctPlacements = Math.max(correctPlacementsRegular, correctPlacementsVertical);
   
   
   // Format the items for display
