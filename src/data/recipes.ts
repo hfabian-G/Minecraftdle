@@ -12,7 +12,14 @@ interface RecipeFeedback {
   correctPlacements: number;
   messageCorrectPlacements: string;
   messageItemsPresent: string;
+  colorCodes: ColorCodeArray;
 }
+
+// -1 wrong item
+// 0 wrong spot
+// 1 correct item and spot
+type ColorCode = |-1|0|1;
+type ColorCodeArray = ColorCode[];
 
 function afixTopLeft(pattern: (string | null)[]): (string | null)[] {
   let isFound: boolean = false;
@@ -93,16 +100,23 @@ export function getRecipeOfTheDay(): Recipe {
 }
 
 export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
+  let colorCodes: ColorCodeArray = Array(9).fill(-1);
   const recipeOfTheDay = getRecipeOfTheDay();
   const afixedGrid = afixTopLeft([...grid]);
   const afixedRecipeOfTheDay = afixTopLeft([...recipeOfTheDay.pattern]);
   const afixedRecipeOfTheDayVertical = afixTopLeft([...mirrorAcrossXAxis([...recipeOfTheDay.pattern])]);
   if(checkRecipe([...grid]) == getRecipeOfTheDay().result){
+    for(let i = 0; i < grid.length; i++){
+      if(grid[i] != null){
+        colorCodes[i] = 1;
+      }
+    }
     return {
       isMatch: true,
       correctPlacements: 9,
       messageCorrectPlacements: "Perfect! You found today's recipe!",
-      messageItemsPresent: ""
+      messageItemsPresent: "",
+      colorCodes: colorCodes
     };
   }
 
@@ -118,19 +132,33 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
     }
   });
 
+  let colorCodesRegular: ColorCodeArray = Array(9).fill(-1);
+  let colorCodesVertical: ColorCodeArray = Array(9).fill(-1);
   let correctPlacementsRegular = 0;
   let correctPlacementsVertical = 0;
   grid.forEach((item, index) => {
+    if(item != null &&itemsInGridAndRecipe.includes(item)){
+      colorCodesRegular[index] = 0;
+      colorCodesVertical[index] = 0;
+    }
     if (item === recipeOfTheDayAfixedToGrid[index] && item != null) {
       correctPlacementsRegular++;
+      colorCodesRegular[index] = 1;
     }
     if (item === recipeOfTheDayAfixedToGridVertical[index] && item != null) {
       correctPlacementsVertical++;
+      colorCodesVertical[index] = 1;
     }
   });
   let correctPlacements = 0;
   
-    correctPlacements = Math.max(correctPlacementsRegular, correctPlacementsVertical);
+  correctPlacements = Math.max(correctPlacementsRegular, correctPlacementsVertical);
+
+  if(Math.max(correctPlacementsRegular, correctPlacementsVertical) == correctPlacementsRegular){
+    colorCodes = colorCodesRegular;
+  } else {
+    colorCodes = colorCodesVertical;
+  }
   
   
   // Format the items for display
@@ -171,7 +199,8 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
     isMatch: false,
     correctPlacements,
     messageCorrectPlacements,
-    messageItemsPresent
+    messageItemsPresent,
+    colorCodes: colorCodes
   };
 }
 
