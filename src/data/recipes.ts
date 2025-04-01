@@ -561,7 +561,7 @@ function afixRecipeToGrid(recipe: (string|null)[], grid: (string|null)[]): (stri
   let afixOffset: number = 0;
   let pivotItem: string|null = "";
   let pivotItemOffset: number = 0;
-  let returnArray: (string|null)[] = Array(9).fill(null);
+  const returnArray: (string|null)[] = Array(9).fill(null);
   
   for(let i = 0; i < grid.length; i++){
     if(recipe[i] != null){
@@ -569,9 +569,7 @@ function afixRecipeToGrid(recipe: (string|null)[], grid: (string|null)[]): (stri
     }
     if(grid[i] != null){
       afixOffset = i;
-      console.log(afixOffset)
       afixOffset = afixOffset - pivotItemOffset;
-      console.log(afixOffset)
       pivotItem = grid[i];
       break;
     }
@@ -620,7 +618,6 @@ export function getRecipeOfTheDay(): Recipe {
 
 export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
   const recipeOfTheDay = getRecipeOfTheDay();
-  console.log(recipeOfTheDay.result.id);
   const afixedGrid = afixTopLeft([...grid]);
   const afixedRecipeOfTheDay = afixTopLeft([...recipeOfTheDay.pattern]);
   const afixedRecipeOfTheDayVertical = afixTopLeft([...mirrorAcrossXAxis([...recipeOfTheDay.pattern])]);
@@ -634,10 +631,8 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
   }
 
 
-  let recipeOfTheDayAfixedToGrid = afixRecipeToGrid([...afixedRecipeOfTheDay], [...grid]);
-  let recipeOfTheDayAfixedToGridVertical = afixRecipeToGrid([...afixedRecipeOfTheDayVertical], [...grid]);
-  console.log(recipeOfTheDayAfixedToGrid);
-  console.log(recipeOfTheDayAfixedToGridVertical);
+  const recipeOfTheDayAfixedToGrid = afixRecipeToGrid([...afixedRecipeOfTheDay], [...grid]);
+  const recipeOfTheDayAfixedToGridVertical = afixRecipeToGrid([...afixedRecipeOfTheDayVertical], [...grid]);
 
 
   const itemsInGridAndRecipe: string[] = [];
@@ -658,7 +653,6 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
     }
   });
   let correctPlacements = 0;
-  const isAllNulls = (arr: any[]): boolean => arr.every(item => item === null);
   
     correctPlacements = Math.max(correctPlacementsRegular, correctPlacementsVertical);
   
