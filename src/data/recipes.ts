@@ -14,6 +14,200 @@ interface RecipeFeedback {
   messageItemsPresent: string;
 }
 
+function afixTopLeft(pattern: (string | null)[]): (string | null)[] {
+  let isFound: boolean = false;
+  let offset: number = 0;
+  for (let i = 0; i < pattern.length; i++) {
+    if (pattern[i] != null && !isFound) {
+      isFound = true;
+      offset = i;
+    }
+    if (i == 0 && isFound) break;
+    if (pattern[i] != null && isFound) {
+      pattern[i - offset] = pattern[i];
+      if (offset > 0) {
+        pattern[i] = null;
+      }
+    }
+  }
+  return pattern;
+}
+
+function afixRecipeToGrid(recipe: (string|null)[], grid: (string|null)[]): (string|null)[] {
+  let afixOffset: number = 0;
+  let pivotItem: string|null = "";
+  let pivotItemOffset: number = 0;
+  const returnArray: (string|null)[] = Array(9).fill(null);
+  
+  for(let i = 0; i < grid.length; i++){
+    if(recipe[i] != null){
+      pivotItemOffset = i;
+    }
+    if(grid[i] != null){
+      afixOffset = i;
+      afixOffset = afixOffset - pivotItemOffset;
+      pivotItem = grid[i];
+      break;
+    }
+  }
+  let pivotItemHit: boolean = false;
+  for(let i = 0; i < recipe.length; i++){
+    if((recipe[i] == pivotItem || pivotItemHit) && recipe[i] != null){
+      pivotItemHit = true;
+      if(i + afixOffset >= recipe.length){
+        return Array(9).fill("hey");
+      } else {
+        returnArray[i + afixOffset] = recipe[i];
+
+      }
+    }
+  }
+  return returnArray;
+}
+
+export function getRecipeOfTheDay(): Recipe {
+  //const centralTime = new Date().toLocaleString("en-US", { timeZone: "America/Chicago" });
+  //const today = new Date(centralTime).setHours(18, 0, 0, 0);
+  const today = new Date();
+  const seed = (today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate()) % recipes.length;
+  // Use the date as seed for pseudo-random selection
+  
+  const recipeOfTheDay = recipes[seed];
+
+  /**
+  for (let i = 0; i < recipes.length; i++){
+    if(recipes[i].result.id == "iron_axe") return recipes[i];
+  }
+  */
+  
+  
+    
+  /**
+  for (let i = 0; i < recipes.length; i++){
+    if(recipes[i].result.id == "wooden_door") return recipes[i];
+  }
+  */
+  
+
+  return recipeOfTheDay;
+}
+
+export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
+  const recipeOfTheDay = getRecipeOfTheDay();
+  const afixedGrid = afixTopLeft([...grid]);
+  const afixedRecipeOfTheDay = afixTopLeft([...recipeOfTheDay.pattern]);
+  const afixedRecipeOfTheDayVertical = afixTopLeft([...mirrorAcrossXAxis([...recipeOfTheDay.pattern])]);
+  if(checkRecipe([...grid]) == getRecipeOfTheDay().result){
+    return {
+      isMatch: true,
+      correctPlacements: 9,
+      messageCorrectPlacements: "Perfect! You found today's recipe!",
+      messageItemsPresent: ""
+    };
+  }
+
+
+  const recipeOfTheDayAfixedToGrid = afixRecipeToGrid([...afixedRecipeOfTheDay], [...grid]);
+  const recipeOfTheDayAfixedToGridVertical = afixRecipeToGrid([...afixedRecipeOfTheDayVertical], [...grid]);
+
+
+  const itemsInGridAndRecipe: string[] = [];
+  afixedGrid.forEach((item) => {
+    if (item != null &&!itemsInGridAndRecipe.includes(item) && afixedRecipeOfTheDay.includes(item)){
+      itemsInGridAndRecipe.push(item);
+    }
+  });
+
+  let correctPlacementsRegular = 0;
+  let correctPlacementsVertical = 0;
+  grid.forEach((item, index) => {
+    if (item === recipeOfTheDayAfixedToGrid[index] && item != null) {
+      correctPlacementsRegular++;
+    }
+    if (item === recipeOfTheDayAfixedToGridVertical[index] && item != null) {
+      correctPlacementsVertical++;
+    }
+  });
+  let correctPlacements = 0;
+  
+    correctPlacements = Math.max(correctPlacementsRegular, correctPlacementsVertical);
+  
+  
+  // Format the items for display
+  const formattedItems = itemsInGridAndRecipe.map((item, index) => {
+    let formattedItem = item.replace(/_/g, ' ');
+    // Capitalize first letter
+    formattedItem = formattedItem.charAt(0).toUpperCase() + formattedItem.slice(1);
+    
+    // Add (s) if not already plural
+    if (!formattedItem.endsWith('s')) {
+      formattedItem += '(s)';
+    }
+    
+    // Add 'and' for the last item if there's more than one
+    if (index === itemsInGridAndRecipe.length - 1 && index !== 0) {
+      formattedItem = 'and ' + formattedItem;
+    }
+    
+    return formattedItem;
+  });
+
+  
+  // Provide encouraging feedback based on correct placements
+  let messageCorrectPlacements = "";
+  let messageItemsPresent = "";
+  if (correctPlacements > 0) {
+    messageItemsPresent = `The Recipe of the Day contains ${formattedItems.join(", ")}`;
+    messageCorrectPlacements = `You have ${correctPlacements} item${correctPlacements > 1 ? 's' : ''} in the right spot! Keep trying!`;
+  } else if (formattedItems.length > 0) {
+    messageItemsPresent = `The Recipe of the Day contains ${formattedItems.join(", ")}`;
+  } else {
+    messageItemsPresent = "No matches, keep trying!";
+  }
+
+  
+
+  return {
+    isMatch: false,
+    correctPlacements,
+    messageCorrectPlacements,
+    messageItemsPresent
+  };
+}
+
+function mirrorAcrossXAxis(pattern: (string | null)[]): (string | null)[] {
+  let holdingvar: string | null
+  holdingvar = pattern[0];
+  pattern[0] = pattern[2];
+  pattern[2] = holdingvar;
+  holdingvar = pattern[3];
+  pattern[3] = pattern[5];
+  pattern[5] = holdingvar;
+  holdingvar = pattern[6];
+  pattern[6] = pattern[8];
+  pattern[8] = holdingvar;
+  return pattern;
+}
+
+export function checkRecipe(grid: (string | null)[]): Recipe['result'] | null {
+  const afixedGrid = afixTopLeft([...grid]);
+  for (const recipe of recipes) {
+    const afixedRecipe = afixTopLeft([...recipe.pattern]);
+    const afixedRecipeVertical = afixTopLeft([...mirrorAcrossXAxis([...recipe.pattern])]);
+    const itemsInGridAndRecipe = afixedGrid.filter((item, index) => 
+      item === afixedRecipe[index]
+    ).length;
+    const itemsInGridAndMirroredRecipe = afixedGrid.filter((item,index) => 
+      item === afixedRecipeVertical[index]
+    ).length;
+    const itemsInGridAndRecipeMax = Math.max(itemsInGridAndRecipe, itemsInGridAndMirroredRecipe);
+    if (itemsInGridAndRecipeMax === afixedRecipe.length) {
+      return recipe.result;
+    }
+  }
+  return null;
+} 
+
 export const recipes: Recipe[] = [
   {
     // Diamond Pickaxe
@@ -536,198 +730,3 @@ export const recipes: Recipe[] = [
     }
   }
 ];
-
-
-function afixTopLeft(pattern: (string | null)[]): (string | null)[] {
-  let isFound: boolean = false;
-  let offset: number = 0;
-  for (let i = 0; i < pattern.length; i++) {
-    if (pattern[i] != null && !isFound) {
-      isFound = true;
-      offset = i;
-    }
-    if (i == 0 && isFound) break;
-    if (pattern[i] != null && isFound) {
-      pattern[i - offset] = pattern[i];
-      if (offset > 0) {
-        pattern[i] = null;
-      }
-    }
-  }
-  return pattern;
-}
-
-function afixRecipeToGrid(recipe: (string|null)[], grid: (string|null)[]): (string|null)[] {
-  let afixOffset: number = 0;
-  let pivotItem: string|null = "";
-  let pivotItemOffset: number = 0;
-  const returnArray: (string|null)[] = Array(9).fill(null);
-  
-  for(let i = 0; i < grid.length; i++){
-    if(recipe[i] != null){
-      pivotItemOffset = i;
-    }
-    if(grid[i] != null){
-      afixOffset = i;
-      afixOffset = afixOffset - pivotItemOffset;
-      pivotItem = grid[i];
-      break;
-    }
-  }
-  let pivotItemHit: boolean = false;
-  for(let i = 0; i < recipe.length; i++){
-    if((recipe[i] == pivotItem || pivotItemHit) && recipe[i] != null){
-      pivotItemHit = true;
-      if(i + afixOffset >= recipe.length){
-        return Array(9).fill("hey");
-      } else {
-        returnArray[i + afixOffset] = recipe[i];
-
-      }
-    }
-  }
-  return returnArray;
-}
-
-export function getRecipeOfTheDay(): Recipe {
-  //const centralTime = new Date().toLocaleString("en-US", { timeZone: "America/Chicago" });
-  //const today = new Date(centralTime).setHours(18, 0, 0, 0);
-  const today = new Date();
-  const seed = (today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate()) % recipes.length;
-  // Use the date as seed for pseudo-random selection
-  
-  const recipeOfTheDay = recipes[seed];
-
-  /**
-  for (let i = 0; i < recipes.length; i++){
-    if(recipes[i].result.id == "iron_axe") return recipes[i];
-  }
-  */
-  
-  
-    
-  /**
-  for (let i = 0; i < recipes.length; i++){
-    if(recipes[i].result.id == "wooden_door") return recipes[i];
-  }
-  */
-  
-
-  return recipeOfTheDay;
-}
-
-export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
-  const recipeOfTheDay = getRecipeOfTheDay();
-  const afixedGrid = afixTopLeft([...grid]);
-  const afixedRecipeOfTheDay = afixTopLeft([...recipeOfTheDay.pattern]);
-  const afixedRecipeOfTheDayVertical = afixTopLeft([...mirrorAcrossXAxis([...recipeOfTheDay.pattern])]);
-  if(checkRecipe([...grid]) == getRecipeOfTheDay().result){
-    return {
-      isMatch: true,
-      correctPlacements: 9,
-      messageCorrectPlacements: "Perfect! You found today's recipe!",
-      messageItemsPresent: ""
-    };
-  }
-
-
-  const recipeOfTheDayAfixedToGrid = afixRecipeToGrid([...afixedRecipeOfTheDay], [...grid]);
-  const recipeOfTheDayAfixedToGridVertical = afixRecipeToGrid([...afixedRecipeOfTheDayVertical], [...grid]);
-
-
-  const itemsInGridAndRecipe: string[] = [];
-  afixedGrid.forEach((item) => {
-    if (item != null &&!itemsInGridAndRecipe.includes(item) && afixedRecipeOfTheDay.includes(item)){
-      itemsInGridAndRecipe.push(item);
-    }
-  });
-
-  let correctPlacementsRegular = 0;
-  let correctPlacementsVertical = 0;
-  grid.forEach((item, index) => {
-    if (item === recipeOfTheDayAfixedToGrid[index] && item != null) {
-      correctPlacementsRegular++;
-    }
-    if (item === recipeOfTheDayAfixedToGridVertical[index] && item != null) {
-      correctPlacementsVertical++;
-    }
-  });
-  let correctPlacements = 0;
-  
-    correctPlacements = Math.max(correctPlacementsRegular, correctPlacementsVertical);
-  
-  
-  // Format the items for display
-  const formattedItems = itemsInGridAndRecipe.map((item, index) => {
-    let formattedItem = item.replace(/_/g, ' ');
-    // Capitalize first letter
-    formattedItem = formattedItem.charAt(0).toUpperCase() + formattedItem.slice(1);
-    
-    // Add (s) if not already plural
-    if (!formattedItem.endsWith('s')) {
-      formattedItem += '(s)';
-    }
-    
-    // Add 'and' for the last item if there's more than one
-    if (index === itemsInGridAndRecipe.length - 1 && index !== 0) {
-      formattedItem = 'and ' + formattedItem;
-    }
-    
-    return formattedItem;
-  });
-
-  
-  // Provide encouraging feedback based on correct placements
-  let messageCorrectPlacements = "";
-  let messageItemsPresent = "";
-  if (correctPlacements > 0) {
-    messageItemsPresent = `The Recipe of the Day contains ${formattedItems.join(", ")}`;
-    messageCorrectPlacements = `You have ${correctPlacements} item${correctPlacements > 1 ? 's' : ''} in the right spot! Keep trying!`;
-  } else if (formattedItems.length > 0) {
-    messageItemsPresent = `The Recipe of the Day contains ${formattedItems.join(", ")}`;
-  } else {
-    messageItemsPresent = "No matches, keep trying!";
-  }
-
-  
-
-  return {
-    isMatch: false,
-    correctPlacements,
-    messageCorrectPlacements,
-    messageItemsPresent
-  };
-}
-
-function mirrorAcrossXAxis(pattern: (string | null)[]): (string | null)[] {
-  let holdingvar: string | null
-  holdingvar = pattern[0];
-  pattern[0] = pattern[2];
-  pattern[2] = holdingvar;
-  holdingvar = pattern[3];
-  pattern[3] = pattern[5];
-  pattern[5] = holdingvar;
-  holdingvar = pattern[6];
-  pattern[6] = pattern[8];
-  pattern[8] = holdingvar;
-  return pattern;
-}
-
-export function checkRecipe(grid: (string | null)[]): Recipe['result'] | null {
-  const afixedGrid = afixTopLeft([...grid]);
-  for (const recipe of recipes) {
-    const afixedRecipe = afixTopLeft([...recipe.pattern]);
-    const afixedRecipeVertical = afixTopLeft([...mirrorAcrossXAxis([...recipe.pattern])]);
-    const itemsInGridAndRecipe = afixedGrid.filter((item, index) => 
-      item === afixedRecipe[index]
-    ).length;
-    const itemsInGridAndMirroredRecipe = afixedGrid.filter((item,index) => 
-      item === afixedRecipeVertical[index]
-    ).length;
-    const itemsInGridAndRecipeMax = Math.max(itemsInGridAndRecipe, itemsInGridAndMirroredRecipe);
-    if (itemsInGridAndRecipeMax === afixedRecipe.length) {
-      return recipe.result;
-    }
-  }
-  return null;
-} 
