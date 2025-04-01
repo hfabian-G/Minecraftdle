@@ -686,7 +686,7 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
   } else if (formattedItems.length > 0) {
     messageItemsPresent = `The Recipe of the Day contains ${formattedItems.join(", ")}`;
   } else {
-    messageCorrectPlacements = "No matches, keep trying!";
+    messageItemsPresent = "No matches, keep trying!";
   }
 
   
