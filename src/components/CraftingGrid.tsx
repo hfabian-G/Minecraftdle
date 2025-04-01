@@ -89,6 +89,7 @@ const CraftingGrid: React.FC<CraftingGridProps> = ({ grid, setGrid, colorCodes }
     setGrid(prev => {
       const newGrid = [...prev];
       newGrid[index] = null;
+      colorCodes[index] = -1;
       return newGrid;
     });
   };

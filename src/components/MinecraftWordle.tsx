@@ -12,10 +12,6 @@ const MinecraftWordle: React.FC = () => {
   const [grid, setGrid] = useState<(string | null)[]>(Array(9).fill(null));
   const [showSuccess, setShowSuccess] = useState(false);
   const [colorCodes, setColorCodes] = useState<ColorCodeArray>(Array(9).fill(-1))
-  const [messageCorrectPlacements, setMessageCorrectPlacements] = useState<string | null>(null);
-  const [messageItemsPresent, setMessageItemsPresent] = useState<string | null>(null);
-
-
 
   const handleReset = () => {
     setGrid(Array(9).fill(null));
@@ -27,11 +23,7 @@ const MinecraftWordle: React.FC = () => {
     if (result.isMatch) {
       setShowSuccess(true);
     }
-    console.log(result.messageCorrectPlacements);
-    console.log(result.messageItemsPresent);
     
-    setMessageCorrectPlacements(result.messageCorrectPlacements);
-    setMessageItemsPresent(result.messageItemsPresent);
     setColorCodes(result.colorCodes);
   };
 
@@ -72,7 +64,7 @@ const MinecraftWordle: React.FC = () => {
               <CraftingGrid grid={grid} setGrid={setGrid} colorCodes={colorCodes} />
               <ItemSelection />
               <div className="flex flex-col gap-2">
-                <div className="flex gap-2">
+                <div className="flex gap-2 justify-center">
                   <button 
                     onClick={handleSubmit}
                     className="px-10 py-2 bg-emerald-600 rounded hover:bg-emerald-700 shadow-lg shadow-black/50"
@@ -85,17 +77,6 @@ const MinecraftWordle: React.FC = () => {
                     Reset Crafting Grid
                   </button>
                 </div>
-                {messageItemsPresent && (
-                  <p className="text-center text-yellow-400">
-                    {messageItemsPresent}
-                  </p>
-                )}
-                
-                {messageCorrectPlacements && (
-                  <p className="text-center text-green-400">
-                    {messageCorrectPlacements}
-                  </p>
-                )}
               </div>
             </div>
           </div>

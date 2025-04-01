@@ -10,8 +10,6 @@ interface Recipe {
 interface RecipeFeedback {
   isMatch: boolean;
   correctPlacements: number;
-  messageCorrectPlacements: string;
-  messageItemsPresent: string;
   colorCodes: ColorCodeArray;
 }
 
@@ -114,8 +112,6 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
     return {
       isMatch: true,
       correctPlacements: 9,
-      messageCorrectPlacements: "Perfect! You found today's recipe!",
-      messageItemsPresent: "",
       colorCodes: colorCodes
     };
   }
@@ -159,45 +155,10 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
   } else {
     colorCodes = colorCodesVertical;
   }
-  
-  
-  // Format the items for display
-  const formattedItems = itemsInGridAndRecipe.map((item, index) => {
-    let formattedItem = item.replace(/_/g, ' ');
-    // Capitalize first letter
-    formattedItem = formattedItem.charAt(0).toUpperCase() + formattedItem.slice(1);
-    
-    // Add (s) if not already plural
-    if (!formattedItem.endsWith('s')) {
-      formattedItem += '(s)';
-    }
-    
-    // Add 'and' for the last item if there's more than one
-    if (index === itemsInGridAndRecipe.length - 1 && index !== 0) {
-      formattedItem = 'and ' + formattedItem;
-    }
-    
-    return formattedItem;
-  });
-
-  
-  // Provide encouraging feedback based on correct placements
-  let messageCorrectPlacements = "";
-  let messageItemsPresent = "";
-  if (correctPlacements > 0) {
-    messageItemsPresent = `The Recipe of the Day contains ${formattedItems.join(", ")}`;
-    messageCorrectPlacements = `You have ${correctPlacements} item${correctPlacements > 1 ? 's' : ''} in the right spot! Keep trying!`;
-  } else if (formattedItems.length > 0) {
-    messageItemsPresent = `The Recipe of the Day contains ${formattedItems.join(", ")}`;
-  } else {
-    messageItemsPresent = "No matches, keep trying!";
-  }
 
   return {
     isMatch: false,
     correctPlacements,
-    messageCorrectPlacements,
-    messageItemsPresent,
     colorCodes: colorCodes
   };
 }
