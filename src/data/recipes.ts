@@ -112,7 +112,7 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
   if(checkRecipe([...grid]) == getRecipeOfTheDay().result){
     for(let i = 0; i < grid.length; i++){
       if(grid[i] != null){
-        greenItems.push(grid[i]);
+        greenItems.push(grid[i] as string);
         colorCodes[i] = 1;
       }
     }
