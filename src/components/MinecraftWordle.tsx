@@ -12,9 +12,9 @@ const MinecraftWordle: React.FC = () => {
   const [grid, setGrid] = useState<(string | null)[]>(Array(9).fill(null));
   const [showSuccess, setShowSuccess] = useState(false);
   const [colorCodes, setColorCodes] = useState<ColorCodeArray>(Array(9).fill(-1))
-  const [greenItemsList, setGreenItemsList] = useState<string[]>([]);
-  const [yellowItemsList, setYellowItemsList] = useState<string[]>([]);
-  const [redItemsList, setRedItemsList] = useState<string[]>([]);
+  const [greenItemsList] = useState<string[]>([]);
+  const [yellowItemsList] = useState<string[]>([]);
+  const [redItemsList] = useState<string[]>([]);
 
   const handleReset = () => {
     setGrid(Array(9).fill(null));
