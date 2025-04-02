@@ -102,9 +102,9 @@ export function getRecipeOfTheDay(): Recipe {
 
 export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
   let colorCodes: ColorCodeArray = Array(9).fill(-1);
-  let greenItems: string[] = [];
-  let yellowItems: string[] = [];
-  let redItems: string[] = [];
+  const greenItems: string[] = [];
+  const yellowItems: string[] = [];
+  const redItems: string[] = [];
   const recipeOfTheDay = getRecipeOfTheDay();
   const afixedGrid = afixTopLeft([...grid]);
   const afixedRecipeOfTheDay = afixTopLeft([...recipeOfTheDay.pattern]);
