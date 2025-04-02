@@ -12,6 +12,9 @@ const MinecraftWordle: React.FC = () => {
   const [grid, setGrid] = useState<(string | null)[]>(Array(9).fill(null));
   const [showSuccess, setShowSuccess] = useState(false);
   const [colorCodes, setColorCodes] = useState<ColorCodeArray>(Array(9).fill(-1))
+  const [greenItemsList, setGreenItemsList] = useState<string[]>([]);
+  const [yellowItemsList, setYellowItemsList] = useState<string[]>([]);
+  const [redItemsList, setRedItemsList] = useState<string[]>([]);
 
   const handleReset = () => {
     setGrid(Array(9).fill(null));
@@ -25,6 +28,10 @@ const MinecraftWordle: React.FC = () => {
     }
     
     setColorCodes(result.colorCodes);
+    setGreenItemsList(result.greenItems);
+    setYellowItemsList(result.yellowItems);
+    setRedItemsList(result.redItems);
+    console.log(result.redItems);
   };
 
   return (
@@ -62,7 +69,7 @@ const MinecraftWordle: React.FC = () => {
           <div className="max-w-4xl mx-auto">
             <div className="flex flex-col items-center gap-8">
               <CraftingGrid grid={grid} setGrid={setGrid} colorCodes={colorCodes} />
-              <ItemSelection />
+              <ItemSelection greenItems={greenItemsList} yellowItems={yellowItemsList} redItems={redItemsList}/>
               <div className="flex flex-col gap-2">
                 <div className="flex gap-2 justify-center">
                   <button 

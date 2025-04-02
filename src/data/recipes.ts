@@ -11,6 +11,9 @@ interface RecipeFeedback {
   isMatch: boolean;
   correctPlacements: number;
   colorCodes: ColorCodeArray;
+  greenItems: string[];
+  yellowItems: string[];
+  redItems: string[];
 }
 
 // -1 wrong item
@@ -99,6 +102,9 @@ export function getRecipeOfTheDay(): Recipe {
 
 export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
   let colorCodes: ColorCodeArray = Array(9).fill(-1);
+  let greenItems: string[] = [];
+  let yellowItems: string[] = [];
+  let redItems: string[] = [];
   const recipeOfTheDay = getRecipeOfTheDay();
   const afixedGrid = afixTopLeft([...grid]);
   const afixedRecipeOfTheDay = afixTopLeft([...recipeOfTheDay.pattern]);
@@ -106,13 +112,17 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
   if(checkRecipe([...grid]) == getRecipeOfTheDay().result){
     for(let i = 0; i < grid.length; i++){
       if(grid[i] != null){
+        greenItems.push(grid[i]);
         colorCodes[i] = 1;
       }
     }
     return {
       isMatch: true,
       correctPlacements: 9,
-      colorCodes: colorCodes
+      colorCodes: colorCodes,
+      greenItems: greenItems,
+      yellowItems: yellowItems,
+      redItems: redItems
     };
   }
 
@@ -160,12 +170,21 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
     if(grid[index] != null && colorCodes[index] == -1){
       colorCodes[index] = -2;
     }
+    if(colorCodes[index] == 1 && grid[index] != null){
+      greenItems.push(grid[index]);
+    }
+    if(colorCodes[index] == -2 && grid[index] != null && !redItems.includes(grid[index])){
+      redItems.push(grid[index]);
+    }
   })
 
   return {
     isMatch: false,
     correctPlacements,
-    colorCodes: colorCodes
+    colorCodes: colorCodes,
+    greenItems: greenItems,
+    yellowItems: itemsInGridAndRecipe,
+    redItems: redItems
   };
 }
 

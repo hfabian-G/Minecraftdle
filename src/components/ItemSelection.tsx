@@ -8,6 +8,9 @@ import Image from 'next/image';
 interface ItemProps {
   id: string;
   name: string;
+  greenItems?: string[];
+  yellowItems?: string[];
+  redItems?: string[];
 }
 
 interface DragItem {
@@ -15,10 +18,28 @@ interface DragItem {
   name: string;
 }
 
-const Item: React.FC<ItemProps> = ({ id, name }) => {
+interface ItemSelectionProps {
+  greenItems?: string[];
+  yellowItems?: string[];
+  redItems?: string[];
+}
+
+const Item: React.FC<ItemProps> = ({ id, name, greenItems, yellowItems, redItems }) => {
   const ref = useRef<HTMLDivElement>(null);
   const { selectedItem, setSelectedItem } = useSelectedItem();
   const isSelected = selectedItem?.id === id;
+
+  const getBorderColor = () => {
+    console.log('Item:', id, 'RedItems:', redItems);
+    if (redItems?.includes(id)) {
+      console.log('Found red item:', id);
+      return 'border-red-700';
+    }
+    if (greenItems?.includes(id)) return 'border-green-500';
+    if (yellowItems?.includes(id)) return 'border-yellow-500';
+    if (isSelected) return 'border-blue-500';
+    return 'border-gray-700';
+  };
 
   const [{ isDragging }, drag] = useDrag<DragItem, void, { isDragging: boolean }>(() => ({
     type: 'item',
@@ -42,15 +63,20 @@ const Item: React.FC<ItemProps> = ({ id, name }) => {
     }
   };
 
+  const getHoverClass = () => {
+    if (redItems?.includes(id) || greenItems?.includes(id) || yellowItems?.includes(id)) {
+      return '';
+    }
+    return 'hover:border-blue-500';
+  };
+
   return (
     <div
       ref={ref}
       onClick={handleClick}
-      className={`w-13 h-13 border-2 ${
-        isSelected 
-          ? 'border-yellow-500 bg-gray-700' 
-          : 'border-gray-700 bg-gray-800'
-      } rounded-lg flex items-center justify-center cursor-pointer hover:border-blue-500 ${
+      className={`w-16 h-16 border-2 ${getBorderColor()} ${
+        isSelected ? 'bg-gray-700' : 'bg-gray-800'
+      } rounded-lg flex items-center justify-center cursor-pointer ${getHoverClass()} overflow-hidden ${
         isDragging ? 'opacity-50' : ''
       }`}
     >
@@ -66,7 +92,7 @@ const Item: React.FC<ItemProps> = ({ id, name }) => {
   );
 };
 
-const ItemSelection: React.FC = () => {
+const ItemSelection: React.FC<ItemSelectionProps> = ({ greenItems, yellowItems, redItems }) => {
   const items = [
     { id: 'planks', name: 'Wooden Planks' },
     { id: 'stick', name: 'Stick' },
@@ -92,7 +118,13 @@ const ItemSelection: React.FC = () => {
       <h2 className="text-white text-xl mb-4">Available Items</h2>
       <div className="grid grid-cols-6 gap-2">
         {items.map((item) => (
-          <Item key={item.id} {...item} />
+          <Item 
+            key={item.id} 
+            {...item} 
+            greenItems={greenItems}
+            yellowItems={yellowItems}
+            redItems={redItems}
+          />
         ))}
       </div>
     </div>
