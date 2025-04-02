@@ -27,11 +27,25 @@ const MinecraftWordle: React.FC = () => {
       setShowSuccess(true);
     }
     
+    for(let i = 0; i < result.greenItems.length; i++){
+      if(!greenItemsList.includes(result.greenItems[i])){
+        greenItemsList.push(result.greenItems[i]);
+      }
+    }
+    for(let i = 0; i < result.yellowItems.length; i++){
+      if(!yellowItemsList.includes(result.yellowItems[i])){
+        yellowItemsList.push(result.yellowItems[i]);
+      }
+    }
+    for(let i = 0; i < result.redItems.length; i++){
+      if(!redItemsList.includes(result.redItems[i])){
+        redItemsList.push(result.redItems[i]);
+      }
+    }
+    
+
     setColorCodes(result.colorCodes);
-    setGreenItemsList(result.greenItems);
-    setYellowItemsList(result.yellowItems);
-    setRedItemsList(result.redItems);
-    console.log(result.redItems);
+    
   };
 
   return (
