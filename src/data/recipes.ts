@@ -223,67 +223,41 @@ export function checkRecipe(grid: (string | null)[]): Recipe['result'] | null {
 
 export const recipes: Recipe[] = [
   {
-    // Diamond Pickaxe
+    // Wooden Axe
     pattern: [
-      'diamond', 'diamond', 'diamond',
-      null, 'stick', null,
+      'planks', 'planks', null,
+      'planks', 'stick', null,
       null, 'stick', null
     ],
     result: {
-      id: 'diamond_pickaxe',
-      name: 'Diamond Pickaxe',
+      id: 'wooden_axe',
+      name: 'Wooden Axe',
       count: 1
     }
   },
   {
-    // Iron Pickaxe
+    // Diamond Shovel
     pattern: [
-      'iron_ingot', 'iron_ingot', 'iron_ingot',
+      null, 'diamond', null,
       null, 'stick', null,
       null, 'stick', null
     ],
     result: {
-      id: 'iron_pickaxe',
-      name: 'Iron Pickaxe',
+      id: 'diamond_shovel',
+      name: 'Diamond Shovel',
       count: 1
     }
   },
   {
-    // Stone Pickaxe
+    // Furnace
     pattern: [
       'cobblestone', 'cobblestone', 'cobblestone',
-      null, 'stick', null,
-      null, 'stick', null
+      'cobblestone', null, 'cobblestone',
+      'cobblestone', 'cobblestone', 'cobblestone'
     ],
     result: {
-      id: 'stone_pickaxe',
-      name: 'Stone Pickaxe',
-      count: 1
-    }
-  },
-  {
-    // Wooden Pickaxe
-    pattern: [
-      'planks', 'planks', 'planks',
-      null, 'stick', null,
-      null, 'stick', null
-    ],
-    result: {
-      id: 'wooden_pickaxe',
-      name: 'Wooden Pickaxe',
-      count: 1
-    }
-  },
-  {
-    // Diamond Sword
-    pattern: [
-      null, 'diamond', null,
-      null, 'diamond', null,
-      null, 'stick', null
-    ],
-    result: {
-      id: 'diamond_sword',
-      name: 'Diamond Sword',
+      id: 'furnace',
+      name: 'Furnace',
       count: 1
     }
   },
@@ -301,6 +275,110 @@ export const recipes: Recipe[] = [
     }
   },
   {
+    // Wooden Planks (yields 4)
+    pattern: [
+      'log', null, null,
+      null, null, null,
+      null, null, null
+    ],
+    result: {
+      id: 'planks',
+      name: 'Wooden Planks',
+      count: 4
+    }
+  },
+  {
+    // Stone Hoe
+    pattern: [
+      'cobblestone', 'cobblestone', null,
+      null, 'stick', null,
+      null, 'stick', null
+    ],
+    result: {
+      id: 'stone_hoe',
+      name: 'Stone Hoe',
+      count: 1
+    }
+  },
+  {
+    // Chest
+    pattern: [
+      'planks', 'planks', 'planks',
+      'planks', null, 'planks',
+      'planks', 'planks', 'planks'
+    ],
+    result: {
+      id: 'chest',
+      name: 'Chest',
+      count: 1
+    }
+  },
+  {
+    // Diamond Sword
+    pattern: [
+      null, 'diamond', null,
+      null, 'diamond', null,
+      null, 'stick', null
+    ],
+    result: {
+      id: 'diamond_sword',
+      name: 'Diamond Sword',
+      count: 1
+    }
+  },
+  {
+    // Wooden Shovel
+    pattern: [
+      null, 'planks', null,
+      null, 'stick', null,
+      null, 'stick', null
+    ],
+    result: {
+      id: 'wooden_shovel',
+      name: 'Wooden Shovel',
+      count: 1
+    }
+  },
+  {
+    // Iron Pickaxe
+    pattern: [
+      'iron_ingot', 'iron_ingot', 'iron_ingot',
+      null, 'stick', null,
+      null, 'stick', null
+    ],
+    result: {
+      id: 'iron_pickaxe',
+      name: 'Iron Pickaxe',
+      count: 1
+    }
+  },
+  {
+    // Bed
+    pattern: [
+      'wool', 'wool', 'wool',
+      'planks', 'planks', 'planks',
+      null, null, null
+    ],
+    result: {
+      id: 'bed',
+      name: 'Bed',
+      count: 1
+    }
+  },
+  {
+    // Diamond Hoe
+    pattern: [
+      'diamond', 'diamond', null,
+      null, 'stick', null,
+      null, 'stick', null
+    ],
+    result: {
+      id: 'diamond_hoe',
+      name: 'Diamond Hoe',
+      count: 1
+    }
+  },
+  {
     // Stone Sword
     pattern: [
       null, 'cobblestone', null,
@@ -310,6 +388,84 @@ export const recipes: Recipe[] = [
     result: {
       id: 'stone_sword',
       name: 'Stone Sword',
+      count: 1
+    }
+  },
+  {
+    // Map
+    pattern: [
+      'paper', 'paper', 'paper',
+      'paper', 'compass', 'paper',
+      'paper', 'paper', 'paper'
+    ],
+    result: {
+      id: 'map',
+      name: 'Map',
+      count: 1
+    }
+  },
+  {
+    // Iron Shovel
+    pattern: [
+      null, 'iron_ingot', null,
+      null, 'stick', null,
+      null, 'stick', null
+    ],
+    result: {
+      id: 'iron_shovel',
+      name: 'Iron Shovel',
+      count: 1
+    }
+  },
+  {
+    // Torch (yields 4)
+    pattern: [
+      'coal', null, null,
+      'stick', null, null,
+      null, null, null
+    ],
+    result: {
+      id: 'torch',
+      name: 'Torch',
+      count: 4
+    }
+  },
+  {
+    // Wooden Hoe
+    pattern: [
+      'planks', 'planks', null,
+      null, 'stick', null,
+      null, 'stick', null
+    ],
+    result: {
+      id: 'wooden_hoe',
+      name: 'Wooden Hoe',
+      count: 1
+    }
+  },
+  {
+    // Stone Pickaxe
+    pattern: [
+      'cobblestone', 'cobblestone', 'cobblestone',
+      null, 'stick', null,
+      null, 'stick', null
+    ],
+    result: {
+      id: 'stone_pickaxe',
+      name: 'Stone Pickaxe',
+      count: 1
+    }
+  },
+  {
+    // Compass
+    pattern: [
+      null, 'iron_ingot', null,
+      'iron_ingot', 'redstone', 'iron_ingot',
+      null, 'iron_ingot', null
+    ],
+    result: {
+      id: 'compass',
+      name: 'Compass',
       count: 1
     }
   },
@@ -340,288 +496,15 @@ export const recipes: Recipe[] = [
     }
   },
   {
-    // Iron Axe
+    // Stone Shovel
     pattern: [
-      'iron_ingot', 'iron_ingot', null,
-      'iron_ingot', 'stick', null,
+      null, 'cobblestone', null,
+      null, 'stick', null,
       null, 'stick', null
     ],
     result: {
-      id: 'iron_axe',
-      name: 'Iron Axe',
-      count: 1
-    }
-  },
-  {
-    // Wooden Axe
-    pattern: [
-      'planks', 'planks', null,
-      'planks', 'stick', null,
-      null, 'stick', null
-    ],
-    result: {
-      id: 'wooden_axe',
-      name: 'Wooden Axe',
-      count: 1
-    }
-  },
-  {
-    // Stone Axe
-    pattern: [
-      'cobblestone', 'cobblestone', null,
-      'cobblestone', 'stick', null,
-      null, 'stick', null
-    ],
-    result: {
-      id: 'stone_axe',
-      name: 'Stone Axe',
-      count: 1
-    }
-  },
-  {
-    // Sticks (yields 4)
-    pattern: [
-      'planks', null, null,
-      'planks', null, null,
-      null, null, null
-    ],
-    result: {
-      id: 'stick',
-      name: 'Stick',
-      count: 4
-    }
-  },
-  {
-    // Wooden Planks (yields 4)
-    pattern: [
-      'log', null, null,
-      null, null, null,
-      null, null, null
-    ],
-    result: {
-      id: 'planks',
-      name: 'Wooden Planks',
-      count: 4
-    }
-  },
-  {
-    // Crafting Table
-    pattern: [
-      'planks', 'planks', null,
-      'planks', 'planks', null,
-      null, null, null
-    ],
-    result: {
-      id: 'crafting_table',
-      name: 'Crafting Table',
-      count: 1
-    }
-  },
-  {
-    // Chest
-    pattern: [
-      'planks', 'planks', 'planks',
-      'planks', null, 'planks',
-      'planks', 'planks', 'planks'
-    ],
-    result: {
-      id: 'chest',
-      name: 'Chest',
-      count: 1
-    }
-  },
-  {
-    // Furnace
-    pattern: [
-      'cobblestone', 'cobblestone', 'cobblestone',
-      'cobblestone', null, 'cobblestone',
-      'cobblestone', 'cobblestone', 'cobblestone'
-    ],
-    result: {
-      id: 'furnace',
-      name: 'Furnace',
-      count: 1
-    }
-  },
-  {
-    // Wooden Door
-    pattern: [
-      'planks', 'planks', null,
-      'planks', 'planks', null,
-      'planks', 'planks', null
-    ],
-    result: {
-      id: 'wooden_door',
-      name: 'Wooden Door',
-      count: 3
-    }
-  },
-  {
-    // Bed
-    pattern: [
-      'wool', 'wool', 'wool',
-      'planks', 'planks', 'planks',
-      null, null, null
-    ],
-    result: {
-      id: 'bed',
-      name: 'Bed',
-      count: 1
-    }
-  },
-  {
-    // Torch (yields 4)
-    pattern: [
-      'coal', null, null,
-      'stick', null, null,
-      null, null, null
-    ],
-    result: {
-      id: 'torch',
-      name: 'Torch',
-      count: 4
-    }
-  },
-  {
-    // Ladder (yields 3)
-    pattern: [
-      'stick', null, 'stick',
-      'stick', 'stick', 'stick',
-      'stick', null, 'stick'
-    ],
-    result: {
-      id: 'ladder',
-      name: 'Ladder',
-      count: 3
-    }
-  },
-  {
-    // Bow
-    pattern: [
-      null, 'stick', 'string',
-      'stick', null, 'string',
-      null, 'stick', 'string'
-    ],
-    result: {
-      id: 'bow',
-      name: 'Bow',
-      count: 1
-    }
-  },
-  {
-    // Arrow (yields 4)
-    pattern: [
-      'flint', null, null,
-      'stick', null, null,
-      'feather', null, null
-    ],
-    result: {
-      id: 'arrow',
-      name: 'Arrow',
-      count: 4
-    }
-  },
-  {
-    // Shield
-    pattern: [
-      'planks', 'iron_ingot', 'planks',
-      'planks', 'planks', 'planks',
-      null, 'planks', null
-    ],
-    result: {
-      id: 'shield',
-      name: 'Shield',
-      count: 1
-    }
-  },
-  {
-    // Boat
-    pattern: [
-      'planks', null, 'planks',
-      'planks', 'planks', 'planks',
-      null, null, null
-    ],
-    result: {
-      id: 'boat',
-      name: 'Boat',
-      count: 1
-    }
-  },
-  {
-    // Bookshelf
-    pattern: [
-      'planks', 'planks', 'planks',
-      'book', 'book', 'book',
-      'planks', 'planks', 'planks'
-    ],
-    result: {
-      id: 'bookshelf',
-      name: 'Bookshelf',
-      count: 1
-    }
-  },
-  {
-    // Bucket
-    pattern: [
-      'iron_ingot', null, 'iron_ingot',
-      null, 'iron_ingot', null,
-      null, null, null
-    ],
-    result: {
-      id: 'bucket',
-      name: 'Bucket',
-      count: 1
-    }
-  },
-  {
-    // Fishing Rod
-    pattern: [
-      null, null, 'stick',
-      null, 'stick', 'string',
-      'stick', null, 'string'
-    ],
-    result: {
-      id: 'fishing_rod',
-      name: 'Fishing Rod',
-      count: 1
-    }
-  },
-  {
-    // Clock
-    pattern: [
-      null, 'gold_ingot', null,
-      'gold_ingot', 'redstone', 'gold_ingot',
-      null, 'gold_ingot', null
-    ],
-    result: {
-      id: 'clock',
-      name: 'Clock',
-      count: 1
-    }
-  },
-  {
-    // Compass
-    pattern: [
-      null, 'iron_ingot', null,
-      'iron_ingot', 'redstone', 'iron_ingot',
-      null, 'iron_ingot', null
-    ],
-    result: {
-      id: 'compass',
-      name: 'Compass',
-      count: 1
-    }
-  },
-  {
-    // Map
-    pattern: [
-      'paper', 'paper', 'paper',
-      'paper', 'compass', 'paper',
-      'paper', 'paper', 'paper'
-    ],
-    result: {
-      id: 'map',
-      name: 'Map',
+      id: 'stone_shovel',
+      name: 'Stone Shovel',
       count: 1
     }
   },
@@ -639,84 +522,6 @@ export const recipes: Recipe[] = [
     }
   },
   {
-    // Diamond Shovel
-    pattern: [
-      null, 'diamond', null,
-      null, 'stick', null,
-      null, 'stick', null
-    ],
-    result: {
-      id: 'diamond_shovel',
-      name: 'Diamond Shovel',
-      count: 1
-    }
-  },
-  {
-    // Iron Shovel
-    pattern: [
-      null, 'iron_ingot', null,
-      null, 'stick', null,
-      null, 'stick', null
-    ],
-    result: {
-      id: 'iron_shovel',
-      name: 'Iron Shovel',
-      count: 1
-    }
-  },
-  {
-    // Wooden Shovel
-    pattern: [
-      null, 'planks', null,
-      null, 'stick', null,
-      null, 'stick', null
-    ],
-    result: {
-      id: 'wooden_shovel',
-      name: 'Wooden Shovel',
-      count: 1
-    }
-  },
-  {
-    // Stone Shovel
-    pattern: [
-      null, 'cobblestone', null,
-      null, 'stick', null,
-      null, 'stick', null
-    ],
-    result: {
-      id: 'stone_shovel',
-      name: 'Stone Shovel',
-      count: 1
-    }
-  },
-  {
-    // Diamond Hoe
-    pattern: [
-      'diamond', 'diamond', null,
-      null, 'stick', null,
-      null, 'stick', null
-    ],
-    result: {
-      id: 'diamond_hoe',
-      name: 'Diamond Hoe',
-      count: 1
-    }
-  },
-  {
-    // Stone Hoe
-    pattern: [
-      'cobblestone', 'cobblestone', null,
-      null, 'stick', null,
-      null, 'stick', null
-    ],
-    result: {
-      id: 'stone_hoe',
-      name: 'Stone Hoe',
-      count: 1
-    }
-  },
-  {
     // Iron Hoe
     pattern: [
       'iron_ingot', 'iron_ingot', null,
@@ -730,16 +535,211 @@ export const recipes: Recipe[] = [
     }
   },
   {
-    // Wooden Hoe
+    // Bow
     pattern: [
-      'planks', 'planks', null,
+      null, 'stick', 'string',
+      'stick', null, 'string',
+      null, 'stick', 'string'
+    ],
+    result: {
+      id: 'bow',
+      name: 'Bow',
+      count: 1
+    }
+  },
+  {
+    // Bucket
+    pattern: [
+      'iron_ingot', null, 'iron_ingot',
+      null, 'iron_ingot', null,
+      null, null, null
+    ],
+    result: {
+      id: 'bucket',
+      name: 'Bucket',
+      count: 1
+    }
+  },
+  {
+    // Diamond Pickaxe
+    pattern: [
+      'diamond', 'diamond', 'diamond',
       null, 'stick', null,
       null, 'stick', null
     ],
     result: {
-      id: 'wooden_hoe',
-      name: 'Wooden Hoe',
+      id: 'diamond_pickaxe',
+      name: 'Diamond Pickaxe',
       count: 1
+    }
+  },
+  {
+    // Ladder (yields 3)
+    pattern: [
+      'stick', null, 'stick',
+      'stick', 'stick', 'stick',
+      'stick', null, 'stick'
+    ],
+    result: {
+      id: 'ladder',
+      name: 'Ladder',
+      count: 3
+    }
+  },
+  {
+    // Wooden Door
+    pattern: [
+      'planks', 'planks', null,
+      'planks', 'planks', null,
+      'planks', 'planks', null
+    ],
+    result: {
+      id: 'wooden_door',
+      name: 'Wooden Door',
+      count: 3
+    }
+  },
+  {
+    // Iron Axe
+    pattern: [
+      'iron_ingot', 'iron_ingot', null,
+      'iron_ingot', 'stick', null,
+      null, 'stick', null
+    ],
+    result: {
+      id: 'iron_axe',
+      name: 'Iron Axe',
+      count: 1
+    }
+  },
+  {
+    // Fishing Rod
+    pattern: [
+      null, null, 'stick',
+      null, 'stick', 'string',
+      'stick', null, 'string'
+    ],
+    result: {
+      id: 'fishing_rod',
+      name: 'Fishing Rod',
+      count: 1
+    }
+  },
+  {
+    // Stone Axe
+    pattern: [
+      'cobblestone', 'cobblestone', null,
+      'cobblestone', 'stick', null,
+      null, 'stick', null
+    ],
+    result: {
+      id: 'stone_axe',
+      name: 'Stone Axe',
+      count: 1
+    }
+  },
+  {
+    // Wooden Pickaxe
+    pattern: [
+      'planks', 'planks', 'planks',
+      null, 'stick', null,
+      null, 'stick', null
+    ],
+    result: {
+      id: 'wooden_pickaxe',
+      name: 'Wooden Pickaxe',
+      count: 1
+    }
+  },
+  {
+    // Bookshelf
+    pattern: [
+      'planks', 'planks', 'planks',
+      'book', 'book', 'book',
+      'planks', 'planks', 'planks'
+    ],
+    result: {
+      id: 'bookshelf',
+      name: 'Bookshelf',
+      count: 1
+    }
+  },
+  {
+    // Arrow (yields 4)
+    pattern: [
+      'flint', null, null,
+      'stick', null, null,
+      'feather', null, null
+    ],
+    result: {
+      id: 'arrow',
+      name: 'Arrow',
+      count: 4
+    }
+  },
+  {
+    // Boat
+    pattern: [
+      'planks', null, 'planks',
+      'planks', 'planks', 'planks',
+      null, null, null
+    ],
+    result: {
+      id: 'boat',
+      name: 'Boat',
+      count: 1
+    }
+  },
+  {
+    // Clock
+    pattern: [
+      null, 'gold_ingot', null,
+      'gold_ingot', 'redstone', 'gold_ingot',
+      null, 'gold_ingot', null
+    ],
+    result: {
+      id: 'clock',
+      name: 'Clock',
+      count: 1
+    }
+  },
+  {
+    // Shield
+    pattern: [
+      'planks', 'iron_ingot', 'planks',
+      'planks', 'planks', 'planks',
+      null, 'planks', null
+    ],
+    result: {
+      id: 'shield',
+      name: 'Shield',
+      count: 1
+    }
+  },
+  {
+    // Crafting Table
+    pattern: [
+      'planks', 'planks', null,
+      'planks', 'planks', null,
+      null, null, null
+    ],
+    result: {
+      id: 'crafting_table',
+      name: 'Crafting Table',
+      count: 1
+    }
+  },
+  {
+    // Sticks (yields 4)
+    pattern: [
+      'planks', null, null,
+      'planks', null, null,
+      null, null, null
+    ],
+    result: {
+      id: 'stick',
+      name: 'Stick',
+      count: 4
     }
   }
 ];
