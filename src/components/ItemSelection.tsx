@@ -30,11 +30,7 @@ const Item: React.FC<ItemProps> = ({ id, name, greenItems, yellowItems, redItems
   const isSelected = selectedItem?.id === id;
 
   const getBorderColor = () => {
-    console.log('Item:', id, 'RedItems:', redItems);
-    if (redItems?.includes(id)) {
-      console.log('Found red item:', id);
-      return 'border-red-700';
-    }
+    if (redItems?.includes(id)) return 'border-red-700';
     if (greenItems?.includes(id)) return 'border-green-500';
     if (yellowItems?.includes(id)) return 'border-yellow-500';
     if (isSelected) return 'border-blue-500';
@@ -74,7 +70,7 @@ const Item: React.FC<ItemProps> = ({ id, name, greenItems, yellowItems, redItems
     <div
       ref={ref}
       onClick={handleClick}
-      className={`w-16 h-16 border-2 ${getBorderColor()} ${
+      className={`w-12 h-12 sm:w-16 sm:h-16 border-2 ${getBorderColor()} ${
         isSelected ? 'bg-gray-700' : 'bg-gray-800'
       } rounded-lg flex items-center justify-center cursor-pointer ${getHoverClass()} overflow-hidden ${
         isDragging ? 'opacity-50' : ''
@@ -83,9 +79,9 @@ const Item: React.FC<ItemProps> = ({ id, name, greenItems, yellowItems, redItems
       <Image
         src={`/items/${id}.png`}
         alt={name}
-        width={48}
-        height={48}
-        className="object-contain"
+        width={36}
+        height={36}
+        className="w-8 h-8 sm:w-12 sm:h-12 object-contain"
         draggable={false}
       />
     </div>
@@ -116,7 +112,7 @@ const ItemSelection: React.FC<ItemSelectionProps> = ({ greenItems, yellowItems, 
   return (
     <div className="bg-gray-900 p-4 rounded-xl shadow-2xl shadow-black/50">
       <h2 className="text-white text-xl mb-4">Available Items</h2>
-      <div className="grid grid-cols-6 gap-2">
+      <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
         {items.map((item) => (
           <Item 
             key={item.id} 

@@ -46,7 +46,7 @@ const CraftingSlot: React.FC<CraftingSlotProps> = ({ index, item, onDrop, onRemo
     <div
       ref={ref}
       onClick={handleClick}
-      className={`w-16 h-16 border-2 ${colorCode} bg-gray-800 rounded-lg flex items-center justify-center overflow-hidden ${
+      className={`w-12 h-12 sm:w-16 sm:h-16 border-2 ${colorCode} bg-gray-800 rounded-lg flex items-center justify-center overflow-hidden ${
         isOver ? 'border-yellow-500' : ''
       } ${
         !item && selectedItem ? 'cursor-pointer hover:border-green-500' : 
@@ -57,9 +57,9 @@ const CraftingSlot: React.FC<CraftingSlotProps> = ({ index, item, onDrop, onRemo
         <Image
           src={`/items/${item}.png`}
           alt={item}
-          width={48}
-          height={48}
-          className="object-contain"
+          width={36}
+          height={36}
+          className="w-8 h-8 sm:w-12 sm:h-12 object-contain"
           draggable={false}
         />
       )}
@@ -119,7 +119,7 @@ const CraftingGrid: React.FC<CraftingGridProps> = ({ grid, setGrid, colorCodes }
 
   return (
     <div className="bg-gray-900 p-6 rounded-xl shadow-2xl shadow-black/50">
-      <div className="flex items-center gap-8">
+      <div className="flex items-center gap-3 sm:gap-8">
         <div>
           <div className="grid grid-cols-3 gap-2">
             {grid.map((item, index) => (
@@ -145,15 +145,15 @@ const CraftingGrid: React.FC<CraftingGridProps> = ({ grid, setGrid, colorCodes }
         </div>
 
         <div className="flex flex-col items-center">
-          <div className={`relative group w-16 h-16 border-2 ${craftingResult ? 'border-green-500 bg-gray-800' : 'border-gray-700 bg-gray-900'} rounded-lg flex items-center justify-center overflow-visible`}>
+          <div className={`relative group w-12 h-12 sm:w-16 sm:h-16 border-2 ${craftingResult ? 'border-green-500 bg-gray-800' : 'border-gray-700 bg-gray-900'} rounded-lg flex items-center justify-center overflow-visible`}>
             {craftingResult && (
               <div className="relative">
                 <Image
                   src={`/items/${craftingResult.id}.png`}
                   alt={craftingResult.name}
-                  width={48}
-                  height={48}
-                  className="object-contain"
+                  width={36}
+                  height={36}
+                  className="w-8 h-8 sm:w-12 sm:h-12 object-contain"
                   draggable={false}
                 />
                 {craftingResult.count > 1 && (
@@ -163,7 +163,7 @@ const CraftingGrid: React.FC<CraftingGridProps> = ({ grid, setGrid, colorCodes }
                 )}
               </div>
             )}
-            <div className="absolute -top-2 -right-60 bg-gray-800 text-white text-xs p-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50">
+            <div className="absolute -top-4 -right-60 bg-gray-800 text-white text-xs p-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50">
               If nothing shows up when you enter a valid 
               <br/>
               recipe, then it has not been implemented yet.
