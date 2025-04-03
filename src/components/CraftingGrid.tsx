@@ -145,7 +145,7 @@ const CraftingGrid: React.FC<CraftingGridProps> = ({ grid, setGrid, colorCodes }
         </div>
 
         <div className="flex flex-col items-center">
-          <div className={`relative group w-16 h-16 border-2 ${craftingResult ? 'border-green-500 bg-gray-800' : 'border-gray-700 bg-gray-900'} rounded-lg flex items-center justify-center overflow-hidden`}>
+          <div className={`relative group w-16 h-16 border-2 ${craftingResult ? 'border-green-500 bg-gray-800' : 'border-gray-700 bg-gray-900'} rounded-lg flex items-center justify-center overflow-visible`}>
             {craftingResult && (
               <div className="relative">
                 <Image
@@ -163,11 +163,10 @@ const CraftingGrid: React.FC<CraftingGridProps> = ({ grid, setGrid, colorCodes }
                 )}
               </div>
             )}
-            <div className="absolute -top-2 -right-60 bg-gray-800 text-white text-xs p-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+            <div className="absolute -top-2 -right-60 bg-gray-800 text-white text-xs p-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap z-50">
               If nothing shows up when you enter a valid 
               <br/>
               recipe, then it has not been implemented yet.
-        
             </div>
           </div>
           {craftingResult && (
