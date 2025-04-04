@@ -104,7 +104,7 @@ export function getRecipeOfTheDay(): Recipe {
 export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
   let colorCodes: ColorCodeArray = Array(9).fill(-1);
   const greenItems: string[] = [];
-  const _yellowItems: string[] = [];
+  //const _yellowItems: string[] = [];
   const redItems: string[] = [];
   const recipeOfTheDay = getRecipeOfTheDay();
   const afixedGrid = afixTopLeft([...grid]);
