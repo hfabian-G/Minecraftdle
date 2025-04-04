@@ -121,7 +121,7 @@ const MinecraftWordle: React.FC = () => {
                 </div>
                 <div className="mt-6 text-center">
                   <a 
-                    href="https://www.paypal.com/donate/?business=637V3U83UBWLL&no_recurring=1&item_name=A+dollar+or+two+makes+all+the+difference&currency_code=USD" 
+                    href="https://www.paypal.com/donate/?business=637V3U83UBWLL&no_recurring=1&currency_code=USD" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-1 sm:py-2 px-2 sm:px-4 rounded-lg transition-colors duration-200 text-sm sm:text-base"
