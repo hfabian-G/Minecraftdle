@@ -1,11 +1,10 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useDrop } from 'react-dnd';
-import { checkRecipe } from '@/data/recipes';
 import { useSelectedItem } from '@/context/SelectedItemContext';
 import Image from 'next/image';
-import { ColorCodeArray, ColorCode } from '@/data/recipes';
+import { ColorCode, ColorCodeArray } from '@/data/recipes';
 
 
 interface CraftingSlotProps {
