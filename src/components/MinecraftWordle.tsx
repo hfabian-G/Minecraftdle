@@ -126,7 +126,7 @@ const MinecraftWordle: React.FC = () => {
                     rel="noopener noreferrer"
                     className="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-1 sm:py-2 px-2 sm:px-4 rounded-lg transition-colors duration-200 text-sm sm:text-base"
                   >
-                    Buy me a coffee
+                    Buy me a coffee!
                   </a>
                 </div>
               </div>
