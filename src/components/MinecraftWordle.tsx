@@ -51,7 +51,7 @@ const MinecraftWordle: React.FC = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <div 
-        className="min-h-screen text-white p-8 relative"
+        className="min-h-screen text-white p-8 relative overflow-x-hidden"
         style={{
           backgroundImage: 'url("/minecraftbackground.jpg")',
           backgroundSize: 'cover',
