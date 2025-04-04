@@ -1,4 +1,4 @@
-interface Recipe {
+export interface Recipe {
   pattern: (string | null)[];
   result: {
     id: string;
@@ -14,6 +14,7 @@ interface RecipeFeedback {
   greenItems: string[];
   yellowItems: string[];
   redItems: string[];
+  resultItem?: Recipe['result'];
 }
 
 // -1 wrong item
@@ -109,7 +110,10 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
   const afixedGrid = afixTopLeft([...grid]);
   const afixedRecipeOfTheDay = afixTopLeft([...recipeOfTheDay.pattern]);
   const afixedRecipeOfTheDayVertical = afixTopLeft([...mirrorAcrossXAxis([...recipeOfTheDay.pattern])]);
-  if(checkRecipe([...grid]) == getRecipeOfTheDay().result){
+  
+  // Check for match first
+  const actualResult = checkRecipe([...grid]);
+  if(actualResult?.id === recipeOfTheDay.result.id){
     for(let i = 0; i < grid.length; i++){
       if(grid[i] != null){
         greenItems.push(grid[i] as string);
@@ -118,11 +122,12 @@ export function submitRecipe(grid: (string | null)[]): RecipeFeedback {
     }
     return {
       isMatch: true,
-      correctPlacements: 9,
+      correctPlacements: 9, // Simplified for match case
       colorCodes: colorCodes,
       greenItems: greenItems,
-      yellowItems: yellowItems,
-      redItems: redItems
+      yellowItems: [], // Clear yellow for match
+      redItems: [],    // Clear red for match
+      resultItem: recipeOfTheDay.result // Include result item on match
     };
   }
 

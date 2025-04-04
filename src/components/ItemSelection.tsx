@@ -5,12 +5,13 @@ import { useDrag } from 'react-dnd';
 import { useSelectedItem } from '@/context/SelectedItemContext';
 import Image from 'next/image';
 
+// Define the color state type (could also be imported if defined globally)
+type ItemColorState = 'green' | 'yellow' | 'red' | null;
+
 interface ItemProps {
   id: string;
   name: string;
-  greenItems?: string[];
-  yellowItems?: string[];
-  redItems?: string[];
+  colorState: ItemColorState; // Use the single color state
 }
 
 interface DragItem {
@@ -19,22 +20,20 @@ interface DragItem {
 }
 
 interface ItemSelectionProps {
-  greenItems?: string[];
-  yellowItems?: string[];
-  redItems?: string[];
+  itemColorStates: Record<string, ItemColorState>; // Expect the states object
 }
 
-const Item: React.FC<ItemProps> = ({ id, name, greenItems, yellowItems, redItems }) => {
+const Item: React.FC<ItemProps> = ({ id, name, colorState }) => {
   const ref = useRef<HTMLDivElement>(null);
   const { selectedItem, setSelectedItem } = useSelectedItem();
   const isSelected = selectedItem?.id === id;
 
   const getBorderColor = () => {
-    if (redItems?.includes(id)) return 'border-red-700';
-    if (greenItems?.includes(id)) return 'border-green-500';
-    if (yellowItems?.includes(id)) return 'border-yellow-500';
+    if (colorState === 'red') return 'border-red-700';
+    if (colorState === 'green') return 'border-green-500';
+    if (colorState === 'yellow') return 'border-yellow-500';
     if (isSelected) return 'border-blue-500';
-    return 'border-gray-700';
+    return 'border-gray-700'; // Default border
   };
 
   const [{ isDragging }, drag] = useDrag<DragItem, void, { isDragging: boolean }>(() => ({
@@ -60,10 +59,11 @@ const Item: React.FC<ItemProps> = ({ id, name, greenItems, yellowItems, redItems
   };
 
   const getHoverClass = () => {
-    if (redItems?.includes(id) || greenItems?.includes(id) || yellowItems?.includes(id)) {
+    // Disable hover effect if item has a fixed color state (green, yellow, red)
+    if (colorState) {
       return '';
     }
-    return 'hover:border-blue-500';
+    return 'hover:border-blue-500'; // Default hover effect
   };
 
   return (
@@ -88,13 +88,15 @@ const Item: React.FC<ItemProps> = ({ id, name, greenItems, yellowItems, redItems
   );
 };
 
-const ItemSelection: React.FC<ItemSelectionProps> = ({ greenItems, yellowItems, redItems }) => {
+const ItemSelection: React.FC<ItemSelectionProps> = ({ itemColorStates }) => {
+  // Define items list directly here or import from elsewhere if needed
   const items = [
     { id: 'planks', name: 'Wooden Planks' },
     { id: 'stick', name: 'Stick' },
     { id: 'cobblestone', name: 'Cobblestone' },
     { id: 'iron_ingot', name: 'Iron Ingot' },
     { id: 'diamond', name: 'Diamond' },
+    { id: 'log', name: 'Oak Log' },
     { id: 'coal', name: 'Coal' },
     { id: 'flint', name: 'Flint' },
     { id: 'book', name: 'Book' },
@@ -116,9 +118,8 @@ const ItemSelection: React.FC<ItemSelectionProps> = ({ greenItems, yellowItems, 
           <Item 
             key={item.id} 
             {...item} 
-            greenItems={greenItems}
-            yellowItems={yellowItems}
-            redItems={redItems}
+            // Pass the specific color state for this item, or null if not set
+            colorState={itemColorStates[item.id] || null} 
           />
         ))}
       </div>
