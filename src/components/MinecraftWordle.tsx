@@ -69,7 +69,7 @@ const MinecraftWordle: React.FC = () => {
             <div className="flex flex-col items-center gap-2 sm:gap-4 p-2 sm:p-4">
               <h1 className="text-3xl sm:text-4xl font-bold text-white">Minecraftdle</h1>
               <p className="text-gray-300 text-center text-sm sm:text-base">
-                Craft the recipe of the day! Place items in the crafting grid and click submit.
+                Craft the Minecraft recipe of the day! Place items in the crafting grid and click submit.
               </p>
             </div>
           </div>
