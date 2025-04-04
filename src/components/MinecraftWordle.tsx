@@ -64,22 +64,16 @@ const MinecraftWordle: React.FC = () => {
         
         {/* Content */}
         <div className="relative z-10">
-          <div className="relative mb-8">
+          {/* Title and Description Block */}
+          <div className="mb-4 sm:mb-8">
             <div className="flex flex-col items-center gap-2 sm:gap-4 p-2 sm:p-4">
               <h1 className="text-3xl sm:text-4xl font-bold text-white">Minecraftdle</h1>
               <p className="text-gray-300 text-center text-sm sm:text-base">
                 Craft the recipe of the day! Place items in the crafting grid and click submit.
               </p>
             </div>
-            <a 
-              href="https://www.paypal.com/donate/?business=637V3U83UBWLL&no_recurring=1&item_name=A+dollar+or+two+makes+all+the+difference&currency_code=USD" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="absolute -top-2 -right-2 bg-green-600 hover:bg-green-700 text-white font-bold py-1 sm:py-2 px-2 sm:px-4 rounded-lg transition-colors duration-200 text-sm sm:text-base"
-            >
-              Donate
-            </a>
           </div>
+          
           <div className="max-w-4xl mx-auto">
             <div className="flex flex-col items-center gap-8">
               <CraftingGrid grid={grid} setGrid={setGrid} colorCodes={colorCodes} />
@@ -97,6 +91,16 @@ const MinecraftWordle: React.FC = () => {
                   >
                     Reset Crafting Grid
                   </button>
+                </div>
+                <div className="mt-6 text-center">
+                  <a 
+                    href="https://www.paypal.com/donate/?business=637V3U83UBWLL&no_recurring=1&item_name=A+dollar+or+two+makes+all+the+difference&currency_code=USD" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-1 sm:py-2 px-2 sm:px-4 rounded-lg transition-colors duration-200 text-sm sm:text-base"
+                  >
+                    Buy me a coffee
+                  </a>
                 </div>
               </div>
             </div>
