@@ -275,19 +275,6 @@ export const recipes: Recipe[] = [
     }
   },
   {
-    // Wooden Planks (yields 4)
-    pattern: [
-      'log', null, null,
-      null, null, null,
-      null, null, null
-    ],
-    result: {
-      id: 'planks',
-      name: 'Wooden Planks',
-      count: 4
-    }
-  },
-  {
     // Stone Hoe
     pattern: [
       'cobblestone', 'cobblestone', null,
