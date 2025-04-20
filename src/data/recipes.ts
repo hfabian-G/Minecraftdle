@@ -501,19 +501,6 @@ export const recipes: Recipe[] = [
     }
   },
   {
-    // Paper (yields 3)
-    pattern: [
-      'sugarcane', 'sugarcane', 'sugarcane',
-      null, null, null,
-      null, null, null
-    ],
-    result: {
-      id: 'paper',
-      name: 'Paper',
-      count: 3
-    }
-  },
-  {
     // Iron Hoe
     pattern: [
       'iron_ingot', 'iron_ingot', null,

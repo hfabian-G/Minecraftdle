@@ -106,8 +106,7 @@ const ItemSelection: React.FC<ItemSelectionProps> = ({ itemColorStates }) => {
     { id: 'string', name: 'String' },
     { id: 'feather', name: 'Feather' },
     { id: 'gold_ingot', name: 'Gold Ingot' },
-    { id: 'paper', name: 'Paper' },
-    { id: 'sugarcane', name: 'Sugar Cane' }
+    { id: 'paper', name: 'Paper' }
   ];
 
   return (
