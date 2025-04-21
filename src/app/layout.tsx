@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   title: "Minecraftdle - A Minecraft Wordle-like Game",
   description: "Test your Minecraft knowledge with this Wordle-like game! Guess the correct crafting recipe and become a master crafter.",
   keywords: "minecraft, wordle, game, crafting, recipe, puzzle",
+  verification: {
+    google: "iyQf8Zt1gyGCLtxBvuhwpJYEbbJgrqdn2zq80AWwoc8",
+  },
   openGraph: {
     title: "Minecraftdle - A Minecraft Wordle-like Game",
     description: "Test your Minecraft knowledge with this Wordle-like game! Guess the correct crafting recipe and become a master crafter.",
